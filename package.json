@@ -4,7 +4,7 @@
   "description": "Desafio do modulo 5 - Api PDV (frente de caixa)",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./index.js"
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
