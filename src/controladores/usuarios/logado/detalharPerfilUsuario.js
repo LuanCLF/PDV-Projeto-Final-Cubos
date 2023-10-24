@@ -11,4 +11,6 @@ const detalharPerfilUsuario = async (req, res) =>{
     }
 }
 
-module.exports = detalharPerfilUsuario;
+module.exports = {
+    detalharPerfilUsuario
+};
