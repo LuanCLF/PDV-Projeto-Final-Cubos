@@ -1,5 +1,5 @@
 const { hash } = require("bcrypt");
-const { knex } = require("../../bancoDeDados/conexao");
+const knex = require("../../bancoDeDados/conexao");
 
 const cadastrarUsuario = async (req, res) => {
   try {

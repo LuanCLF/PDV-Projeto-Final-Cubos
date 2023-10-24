@@ -1,12 +1,4 @@
-require("dotenv").config();
-const express = require("express");
-const rotas = require("./src/rotas/rotas");
-
-const app = express();
-
-app.use(express.json());
-
-app.use(rotas);
+const app = require("./src/server");
 
 app.listen(
   process.env.PORT,
