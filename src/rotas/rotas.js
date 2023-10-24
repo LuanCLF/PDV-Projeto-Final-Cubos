@@ -16,10 +16,12 @@ const {
 } = require("../controladores/usuarios/logado/editarPerfilUsuario");
 
 const usuarioSchema = require("../schema/usuarioSchema");
+const detalharPerfilUsuario = require("../controladores/usuarios/logado/detalharPerfilUsuario");
 
 rotas.post("/usuario", cadastrarUsuario);
 rotas.post("/login", loginUsuario);
 rotas.get("/categorias", listarCategorias);
+rotas.get("/usuario",detalharPerfilUsuario);
 
 rotas.use(autenticacao);
 
