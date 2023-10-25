@@ -2,7 +2,7 @@ exports.up = function (knex) {
   return knex.schema
     .createTable("categorias", (table) => {
       table.bigIncrements("id").primary().index();
-      table.string("descricao").index().notNullable();
+      table.string("descricao").checkLength("<=", 100).index().notNullable();
 
       table.comment("tabela de categorias");
     })

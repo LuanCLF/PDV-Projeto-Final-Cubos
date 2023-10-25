@@ -12,13 +12,21 @@ const detalharPerfilUsuario = require("../controladores/usuarios/logado/detalhar
 
 const usuarioSchema = require("../schema/usuarioSchema");
 
-rotas.post("/usuario", cadastrarUsuario);
-rotas.post("/login", loginUsuario);
+rotas.post(
+  "/usuario",
+  validarRequisicao(usuarioSchema.cadastro),
+  cadastrarUsuario
+);
+rotas.post("/login", validarRequisicao(usuarioSchema.login), loginUsuario);
 rotas.get("/categorias", listarCategorias);
 
 rotas.use(autenticacao);
 
 rotas.get("/usuario", detalharPerfilUsuario);
-rotas.put("/usuario", validarRequisicao(usuarioSchema), editarPerfilUsuario);
+rotas.put(
+  "/usuario",
+  validarRequisicao(usuarioSchema.editar),
+  editarPerfilUsuario
+);
 
 module.exports = rotas;
