@@ -1,4 +1,4 @@
-const { obterUsuarioId } = require("../../../bancoDeDados/queryFuncoes");
+const { obterUsuarioId } = require("../../../bancoDeDados/usuarioQuerys/queryFuncoes");
 
 const detalharPerfilUsuario = async (req, res) => {
     try {

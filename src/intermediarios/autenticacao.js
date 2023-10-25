@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const knex = require("../bancoDeDados/conexao")
+const { obterUsuarioId } = require("../bancoDeDados/usuarioQuerys/queryFuncoes")
 
 const hash = process.env.SENHA_JWT
 
@@ -17,8 +17,8 @@ const autenticacao = async (req, res, next) => {
 
         const { id } = jwt.verify(token, hash)
 
-        const usuarioExiste = await knex("usuarios").where({ id }).first()
-        console.log(usuarioExiste)
+        const usuarioExiste = await obterUsuarioId(id)
+
 
         if (!usuarioExiste) {
             return res.status(404).json({
@@ -26,13 +26,14 @@ const autenticacao = async (req, res, next) => {
             })
         }
 
-        const { senha, ...usuario } = usuarioExiste
+        const { senha: _, ...usuario } = usuarioExiste
 
         req.usuario = usuario
 
+
         next()
     } catch (error) {
-        console.log(error)
+
         return res.status(500).json({
             mensagem: "Erro interno do servidor.",
         })

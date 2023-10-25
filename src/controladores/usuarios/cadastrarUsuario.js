@@ -1,6 +1,6 @@
-const { hash } = require("bcrypt");
-const knex = require("../../bancoDeDados/conexao");
-const { emailExistente, usuarioCadastrado } = require("../../bancoDeDados/queryFuncoes");
+
+const { emailExistente, usuarioCadastrado } = require("../../bancoDeDados/usuarioQuerys/queryFuncoes");
+const criptografarSenha = require("../../utils/criptografiaSenha");
 
 const cadastrarUsuario = async (req, res) => {
   try {
@@ -8,11 +8,12 @@ const cadastrarUsuario = async (req, res) => {
 
     const EmailCadastrado = await emailExistente(email)
 
-    if (EmailCadastrado.length > 0) {
+    if (EmailCadastrado.length > 1) {
       return res.status(409).json({ mensagem: "Usuário já está cadastrado" });
     }
 
-    const senhaCriptografada = await hash(senha, 10);
+    const senhaCriptografada = await criptografarSenha(senha)
+
 
     await usuarioCadastrado(nome, email, senhaCriptografada)
 

@@ -15,6 +15,9 @@ const {
   editarPerfilUsuario,
 } = require("../controladores/usuarios/logado/editarPerfilUsuario");
 
+
+const detalharPerfilUsuario = require("../controladores/usuarios/logado/detalharPerfilUsuario");
+
 const usuarioSchema = require("../schema/usuarioSchema");
 
 rotas.post("/usuario", cadastrarUsuario);
@@ -23,6 +26,7 @@ rotas.get("/categorias", listarCategorias);
 
 rotas.use(autenticacao);
 
+rotas.get("/usuario", detalharPerfilUsuario)
 rotas.put("/usuario", validarRequisicao(usuarioSchema), editarPerfilUsuario);
 
 module.exports = rotas;
