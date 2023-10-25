@@ -5,7 +5,6 @@ const hash = process.env.SENHA_JWT;
 
 const autenticacao = async (req, res, next) => {
   const { authorization } = req.headers;
-
   if (!authorization) {
     return res.status(401).json({
       mensagem: "Não autorizado",
@@ -15,7 +14,13 @@ const autenticacao = async (req, res, next) => {
   try {
     const token = authorization.replace("Bearer ", "").trim();
 
-    const { id } = jwt.verify(token, hash);
+    let id;
+    try {
+      const { id: idPayload } = jwt.verify(token, hash);
+      id = idPayload;
+    } catch (error) {
+      return res.status(401).json({ mensagem: "Usuario não autenticado" });
+    }
 
     const usuarioExiste = await knex("usuarios").where({ id }).first();
 

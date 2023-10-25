@@ -6,7 +6,7 @@ const detalharPerfilUsuario = async (req, res) => {
       .select("nome", "email")
       .where("id", id);
 
-    return res.status(200).json(dadosUsuarioLogado);
+    return res.status(200).json({ usuario: dadosUsuarioLogado[0] });
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
