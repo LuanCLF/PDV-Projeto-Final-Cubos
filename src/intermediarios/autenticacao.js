@@ -18,6 +18,7 @@ const autenticacao = async (req, res, next) => {
         const { id } = jwt.verify(token, hash)
 
         const usuarioExiste = await knex("usuarios").where({ id }).first()
+        console.log(usuarioExiste)
 
         if (!usuarioExiste) {
             return res.status(404).json({
