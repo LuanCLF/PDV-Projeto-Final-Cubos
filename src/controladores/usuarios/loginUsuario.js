@@ -3,12 +3,13 @@ const { compare } = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const { senhaJwt } = require("../../utils/jwt");
+const { obterUsuario } = require("../../bancoDeDados/queryFuncoes");
 
 const loginUsuario = async (req, res) => {
   try {
     const { email, senha: senhaEntrada } = req.body;
 
-    const usuario = await knex("usuarios").where("email", email);
+    const usuario = await obterUsuario(email);
 
     if (usuario.length < 1) {
       return res.status(404).json({ mensagem: "Email ou senha inválidos" });
