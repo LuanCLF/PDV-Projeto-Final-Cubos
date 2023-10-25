@@ -6,10 +6,11 @@ const usuarioSchema = joi.object({
         "string.empty": "O campo nome não pode estar vazio.",
     }),
 
-    email: joi.string().email().required().messages({
+    email: joi.string().email().required().unique().messages({
         "any.required": "O campo email é obrigatório.",
         "string.empty": "O campo email não pode estar vazio.",
         "string.email": "O campo email deve ser um email válido.",
+        "array.unique": "O campo email não pode ser duplicado",
     }),
 
     senha: joi.string().min(3).required().messages({
