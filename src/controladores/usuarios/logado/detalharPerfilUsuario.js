@@ -1,9 +1,7 @@
 const knex = require("../../../bancoDeDados/conexao");
-
 const detalharPerfilUsuario = async (req, res) => {
   try {
     const { id } = req.usuario;
-    console.log("detalhar  ", id);
     const dadosUsuarioLogado = await knex("usuarios")
       .select("nome", "email")
       .where("id", id);
