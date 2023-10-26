@@ -21,7 +21,6 @@ const editarPerfilUsuario = async (req, res) => {
     const emailUsuarioExiste = await obterUsuarioEmail(email);
 
     if (
-
       emailUsuarioExiste.length > 0
     ) {
       return res.status(409).json({
