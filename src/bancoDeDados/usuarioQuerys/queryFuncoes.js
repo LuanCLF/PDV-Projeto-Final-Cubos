@@ -31,11 +31,13 @@ const usuarioCadastrado = async (nome, email, senhaCriptografada) => {
 };
 
 const atualizarUsuario = async (id, nome, email, senhaCriptografada) => {
+
   const perfilUsuario = await knex("usuarios").where({ id }).update({
     nome,
     email,
     senha: senhaCriptografada,
   });
+
   return perfilUsuario;
 };
 

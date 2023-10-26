@@ -21,7 +21,7 @@ const editarPerfilUsuario = async (req, res) => {
     const emailUsuarioExiste = await obterUsuarioEmail(email);
 
     if (
-      emailUsuario === emailUsuarioExiste[0].email ||
+
       emailUsuarioExiste.length > 0
     ) {
       return res.status(409).json({
@@ -30,11 +30,13 @@ const editarPerfilUsuario = async (req, res) => {
     }
 
     const senhaCriptografada = await criptografarSenha(senha);
-    await atualizarUsuario(id, nome, email, senhaCriptografada);
 
+    await atualizarUsuario(id, nome, email, senhaCriptografada);
     return res.status(204).send();
+
   } catch (error) {
     return res.status(500).json({
+
       mensagem: "Erro interno do servidor.",
     });
   }
