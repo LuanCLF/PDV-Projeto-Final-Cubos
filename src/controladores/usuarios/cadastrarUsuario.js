@@ -1,21 +1,22 @@
-
-const { emailExistente, usuarioCadastrado } = require("../../bancoDeDados/usuarioQuerys/queryFuncoes");
+const {
+  emailExistente,
+  usuarioCadastrado,
+} = require("../../bancoDeDados/usuarioQuerys/queryFuncoes");
 const criptografarSenha = require("../../utils/criptografiaSenha");
 
 const cadastrarUsuario = async (req, res) => {
   try {
     const { nome, email, senha } = req.body;
 
-    const EmailCadastrado = await emailExistente(email)
+    const EmailCadastrado = await emailExistente(email);
 
-    if (EmailCadastrado.length > 1) {
+    if (EmailCadastrado.length > 0) {
       return res.status(409).json({ mensagem: "Usuário já está cadastrado" });
     }
 
-    const senhaCriptografada = await criptografarSenha(senha)
+    const senhaCriptografada = await criptografarSenha(senha);
 
-
-    await usuarioCadastrado(nome, email, senhaCriptografada)
+    await usuarioCadastrado(nome, email, senhaCriptografada);
 
     res.status(201).json();
   } catch (error) {
@@ -23,4 +24,4 @@ const cadastrarUsuario = async (req, res) => {
   }
 };
 
-module.exports = { cadastrarUsuario };
+module.exports = cadastrarUsuario;
