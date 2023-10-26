@@ -22,7 +22,7 @@ describe("testes para rota de login do usuário", () => {
       email: "testeTesteB@gmail.com",
       senha: "senha",
     });
-    console.log(resposta.body);
+
     expect(resposta.body).toHaveProperty("usuario");
     expect(resposta.body).toHaveProperty("token");
 

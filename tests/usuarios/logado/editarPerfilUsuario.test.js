@@ -29,6 +29,6 @@ describe("testes para a rota de edição do perfil", () => {
         senha: "senha",
       });
 
-    expect(resposta.statusCode).toEqual(400);
+    expect(resposta.statusCode).toEqual(409);
   });
 });

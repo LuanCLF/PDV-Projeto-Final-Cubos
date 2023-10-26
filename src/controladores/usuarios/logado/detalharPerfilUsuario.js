@@ -1,12 +1,18 @@
-const knex = require("../../../bancoDeDados/conexao");
+const {
+  obterUsuarioId,
+} = require("../../../bancoDeDados/usuarioQuerys/queryFuncoes");
+
 const detalharPerfilUsuario = async (req, res) => {
   try {
     const { id } = req.usuario;
-    const dadosUsuarioLogado = await knex("usuarios")
-      .select("nome", "email")
-      .where("id", id);
 
-    return res.status(200).json({ usuario: dadosUsuarioLogado[0] });
+    const perfilUsuario = await obterUsuarioId(id);
+
+    if (!perfilUsuario) {
+      return res.status(401).json({ mensagem: "Usuário não autorizado" });
+    }
+
+    return res.status(200).json(req.usuario);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }

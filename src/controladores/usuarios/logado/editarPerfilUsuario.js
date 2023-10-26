@@ -1,38 +1,36 @@
-const knex = require("../../../bancoDeDados/conexao");
-const bcrypt = require("bcrypt");
+const {
+  obterUsuarioId,
+  obterUsuarioEmail,
+  atualizarUsuario,
+} = require("../../../bancoDeDados/usuarioQuerys/queryFuncoes");
+const criptografarSenha = require("../../../utils/criptografiaSenha");
 
 const editarPerfilUsuario = async (req, res) => {
   const { nome, email, senha } = req.body;
-  const { id } = req.usuario;
+  const { id, email: emailUsuario } = req.usuario;
 
   try {
-    const usuarioExiste = await knex("usuarios").where({ id }).first();
+    const usuarioExiste = await obterUsuarioId(id);
 
     if (!usuarioExiste) {
-      return res.status(404).json({
-        mensagem: "Usuario não encontrado",
+      return res.status(401).json({
+        mensagem: "Não autorizado.",
       });
     }
 
-    const senhaCriptografada = await bcrypt.hash(senha, 10);
+    const emailUsuarioExiste = await obterUsuarioEmail(email);
 
-    if (email !== req.usuario.email) {
-      const emailUsuarioExiste = await knex("usuarios")
-        .where({ email })
-        .first();
-
-      if (emailUsuarioExiste) {
-        return res.status(400).json({
-          mensagem: "O email já existe",
-        });
-      }
+    if (
+      emailUsuario === emailUsuarioExiste[0].email ||
+      emailUsuarioExiste.length > 0
+    ) {
+      return res.status(409).json({
+        mensagem: "O email já existe",
+      });
     }
 
-    await knex("usuarios").where({ id }).update({
-      nome,
-      email,
-      senha: senhaCriptografada,
-    });
+    const senhaCriptografada = await criptografarSenha(senha);
+    await atualizarUsuario(id, nome, email, senhaCriptografada);
 
     return res.status(204).send();
   } catch (error) {
@@ -41,5 +39,4 @@ const editarPerfilUsuario = async (req, res) => {
     });
   }
 };
-
 module.exports = editarPerfilUsuario;

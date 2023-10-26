@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it, test } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { testServer } from "../../vitest.setup";
 
 describe("testes para a rota de detalhar perfil do usuário", () => {
@@ -16,9 +16,9 @@ describe("testes para a rota de detalhar perfil do usuário", () => {
       .get("/usuario")
       .set({ authorization: `Bearer ${token}` });
 
-    expect(resposta.body).toHaveProperty("usuario");
-    expect(resposta.body).toHaveProperty("usuario.nome");
-    expect(resposta.body).toHaveProperty("usuario.email");
+    expect(resposta.body).toHaveProperty("id");
+    expect(resposta.body).toHaveProperty("nome");
+    expect(resposta.body).toHaveProperty("email");
     expect(resposta.statusCode).toEqual(200);
   });
 });
