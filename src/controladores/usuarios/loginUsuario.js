@@ -2,7 +2,9 @@ const { compare } = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const { senhaJwt } = require("../../utils/jwt");
-const { obterUsuarioEmail } = require("../../bancoDeDados/usuarioQuerys/queryFuncoes");
+const {
+  obterUsuarioEmail,
+} = require("../../bancoDeDados/usuarioQuerys/queryFuncoes");
 
 const loginUsuario = async (req, res) => {
   try {
@@ -11,7 +13,7 @@ const loginUsuario = async (req, res) => {
     const usuario = await obterUsuarioEmail(email);
 
     if (usuario.length < 1) {
-      return res.status(404).json({ mensagem: "Email ou senha inválidos" });
+      return res.status(401).json({ mensagem: "Email ou senha inválidos" });
     }
 
     const { id, senha, nome } = usuario[0];

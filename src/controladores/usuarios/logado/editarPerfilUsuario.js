@@ -7,7 +7,7 @@ const criptografarSenha = require("../../../utils/criptografiaSenha");
 
 const editarPerfilUsuario = async (req, res) => {
   const { nome, email, senha } = req.body;
-  const { id, email: emailUsuario } = req.usuario;
+  const { id } = req.usuario;
 
   try {
     const usuarioExiste = await obterUsuarioId(id);
@@ -20,9 +20,7 @@ const editarPerfilUsuario = async (req, res) => {
 
     const emailUsuarioExiste = await obterUsuarioEmail(email);
 
-    if (
-      emailUsuarioExiste.length > 0
-    ) {
+    if (emailUsuarioExiste.length > 0) {
       return res.status(409).json({
         mensagem: "O email já existe",
       });
@@ -31,11 +29,10 @@ const editarPerfilUsuario = async (req, res) => {
     const senhaCriptografada = await criptografarSenha(senha);
 
     await atualizarUsuario(id, nome, email, senhaCriptografada);
-    return res.status(204).send();
 
+    return res.status(204).json();
   } catch (error) {
     return res.status(500).json({
-
       mensagem: "Erro interno do servidor.",
     });
   }
