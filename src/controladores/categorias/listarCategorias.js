@@ -1,14 +1,11 @@
 const {
   listarCategoriasProd,
 } = require("../../bancoDeDados/produtosQuerys/queryFuncoesProdutos");
+const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
 
-const listarCategorias = async (req, res) => {
-  try {
-    const categorias = await listarCategoriasProd();
-    res.status(200).json(categorias);
-  } catch (error) {
-    res.status(500).json({ mensagem: "Erro interno no servidor" });
-  }
-};
+const listarCategorias = contencaoDeErro(async (req, res) => {
+  const categorias = await listarCategoriasProd();
+  res.status(200).json(categorias);
+});
 
 module.exports = listarCategorias;

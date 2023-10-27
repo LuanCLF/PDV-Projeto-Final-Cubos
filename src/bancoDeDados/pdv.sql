@@ -24,3 +24,4 @@ VALUES
 ('Moda'),
 ('Bebê'),
 ('Games')
+
