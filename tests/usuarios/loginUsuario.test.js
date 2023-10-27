@@ -14,7 +14,16 @@ describe("testes para rota de login do usuário", () => {
       senha: "senha",
     });
 
-    expect(resposta.statusCode).toEqual(404);
+    expect(resposta.statusCode).toEqual(401);
+  });
+
+  it("tenta logar mas não consegue porque a senha tá errada", async () => {
+    const resposta = await testServer.post("/login").send({
+      email: "testeTesteA@gmail.com",
+      senha: "senhaA",
+    });
+
+    expect(resposta.statusCode).toEqual(401);
   });
 
   it("tenta logar e consegue", async () => {
@@ -24,6 +33,8 @@ describe("testes para rota de login do usuário", () => {
     });
 
     expect(resposta.body).toHaveProperty("usuario");
+    expect(resposta.body).toHaveProperty("usuario.id");
+    expect(resposta.body).toHaveProperty("usuario.nome");
     expect(resposta.body).toHaveProperty("token");
 
     expect(resposta.statusCode).toEqual(200);
