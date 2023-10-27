@@ -1,4 +1,4 @@
-const knex = require("../conexao");
+const knex = require("../../bancoDeDados/conexao");
 
 const emailExistente = async (email) => {
   const emailUsuario = await knex("usuarios")
@@ -31,7 +31,6 @@ const usuarioCadastrado = async (nome, email, senhaCriptografada) => {
 };
 
 const atualizarUsuario = async (id, nome, email, senhaCriptografada) => {
-
   const perfilUsuario = await knex("usuarios").where({ id }).update({
     nome,
     email,

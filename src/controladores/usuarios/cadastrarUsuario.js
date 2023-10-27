@@ -5,7 +5,7 @@ const {
 const {
   emailExistente,
   usuarioCadastrado,
-} = require("../../bancoDeDados/usuarioQuerys/queryFuncoes");
+} = require("../../provedor/usuarioQuerys/queryFuncoes");
 const criptografarSenha = require("../../helpers/senhas/criptografiaSenha");
 const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
 
