@@ -13,11 +13,14 @@ const UnauthorizedRequestError = (message) => createApiError(message, StatusCode
 const NotFoundError = (message) => createApiError(message, StatusCodes.NOT_FOUND);
 
 const NotAllowedError = (message) => createApiError(message, StatusCodes.FORBIDDEN);
+
+const ConflictRequestError = (message) => createApiError(message,StatusCodes.CONFLICT);
   
 module.exports = {
     createApiError,
     BadRequestError,
     UnauthorizedRequestError,
     NotFoundError,
-    NotAllowedError
+    NotAllowedError,
+    ConflictRequestError
 }
