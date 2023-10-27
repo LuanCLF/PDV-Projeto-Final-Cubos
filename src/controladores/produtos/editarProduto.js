@@ -8,11 +8,6 @@ const editarProduto = contencaoDeErro(async (req, res) => {
   const { id } = req.params;
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
 
-  fieldValidator(
-    ["descricao", "quantidade_estoque", "valor", "categoria_id"],
-    req.body
-  );
-
   const categoria = await verificarCategoria(categoria_id);
 
   if (!categoria) {
