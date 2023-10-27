@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { testServer } from "../../vitest.setup";
 
 describe("testes para intermediário de autenticação", () => {
-  it("tenta passar pelo intermediário mas não enviou token", async () => {
+  it("tenta passar pelo intermediário mas não enviou o token", async () => {
     const resposta = await testServer.get("/usuario").send();
 
     expect(resposta.statusCode).toEqual(401);

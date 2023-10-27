@@ -1,8 +1,9 @@
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { testServer } from "../../vitest.setup";
-import knex from "../../../src/bancoDeDados/conexao";
+
 describe("testes para a rota de edição do perfil", () => {
   let token = "";
+
   beforeAll(async () => {
     const resposta = await testServer.post("/login").send({
       email: "testeTesteA@gmail.com",
@@ -29,6 +30,6 @@ describe("testes para a rota de edição do perfil", () => {
         senha: "senha",
       });
 
-    expect(resposta.statusCode).toEqual(400);
+    expect(resposta.statusCode).toEqual(409);
   });
 });

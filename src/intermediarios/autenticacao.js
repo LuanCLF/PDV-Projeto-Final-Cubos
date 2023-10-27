@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
-const knex = require("../bancoDeDados/conexao");
+const {
+  obterUsuarioId,
+} = require("../bancoDeDados/usuarioQuerys/queryFuncoes");
 
 const hash = process.env.SENHA_JWT;
 
@@ -16,13 +18,14 @@ const autenticacao = async (req, res, next) => {
 
     let id;
     try {
-      const { id: idPayload } = jwt.verify(token, hash);
-      id = idPayload;
+      const { id: idUsuario } = jwt.verify(token, hash);
+      id = idUsuario;
     } catch (error) {
-      return res.status(401).json({ mensagem: "Usuario não autenticado" });
+      return res.status(401).json({
+        mensagem: "Usuario não autenticado",
+      });
     }
-
-    const usuarioExiste = await knex("usuarios").where({ id }).first();
+    const usuarioExiste = await obterUsuarioId(id);
 
     if (!usuarioExiste) {
       return res.status(404).json({
@@ -30,7 +33,7 @@ const autenticacao = async (req, res, next) => {
       });
     }
 
-    const { senha, ...usuario } = usuarioExiste;
+    const { senha: _, ...usuario } = usuarioExiste;
 
     req.usuario = usuario;
 
