@@ -36,6 +36,8 @@ rotas.put(
   editarPerfilUsuario
 );
 
+rotas.post('/cliente', cadastrarCliente)
+
 rotas.post("/produto", cadastrarProduto);
 rotas.post("/produto/:id", editarProduto);
 rotas.get("/produto/:id", detalharProduto);
