@@ -1,9 +1,9 @@
-const errorHandler = require('./error-handler.js')
-const autenticacao = require('./autenticacao.js')
-const validarRequisicao = require('./validarRequisicao.js')
+const errorHandler = require("./erros/error-handler.js");
+const autenticacao = require("./autenticacao/autenticacao.js");
+const validarRequisicao = require("./validacaoCampo/validarRequisicao.js");
 
 module.exports = {
-    errorHandler,
-    autenticacao,
-    validarRequisicao
-}
+  errorHandler,
+  autenticacao,
+  validarRequisicao,
+};

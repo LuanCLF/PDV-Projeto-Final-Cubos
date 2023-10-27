@@ -1,21 +1,21 @@
 const {
   obterUsuarioId,
 } = require("../../../bancoDeDados/usuarioQuerys/queryFuncoes");
+const {
+  UnauthorizedRequestError,
+} = require("../../../helpers/erros/api-errors-helpers");
+const { contencaoDeErro } = require("../../../helpers/erros/contencaoDeErro");
 
-const detalharPerfilUsuario = async (req, res) => {
-  try {
-    const { id } = req.usuario;
+const detalharPerfilUsuario = contencaoDeErro(async (req, res) => {
+  const { id } = req.usuario;
 
-    const perfilUsuario = await obterUsuarioId(id);
+  const perfilUsuario = await obterUsuarioId(id);
 
-    if (!perfilUsuario) {
-      return res.status(401).json({ mensagem: "Usuário não autorizado" });
-    }
-
-    return res.status(200).json(req.usuario);
-  } catch (error) {
-    return res.status(500).json({ mensagem: "Erro interno do servidor" });
+  if (!perfilUsuario) {
+    throw UnauthorizedRequestError("Usuário não autorizado");
   }
-};
+
+  res.status(200).json(req.usuario);
+});
 
 module.exports = detalharPerfilUsuario;

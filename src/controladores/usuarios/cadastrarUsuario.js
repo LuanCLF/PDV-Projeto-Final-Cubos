@@ -1,27 +1,28 @@
+const { StatusCodes } = require("http-status-codes");
+const {
+  ConflictRequestError,
+} = require("../../helpers/erros/api-errors-helpers");
 const {
   emailExistente,
   usuarioCadastrado,
 } = require("../../bancoDeDados/usuarioQuerys/queryFuncoes");
-const criptografarSenha = require("../../utils/criptografiaSenha");
+const criptografarSenha = require("../../helpers/senhas/criptografiaSenha");
+const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
 
-const cadastrarUsuario = async (req, res) => {
-  try {
-    const { nome, email, senha } = req.body;
+const cadastrarUsuario = contencaoDeErro(async (req, res) => {
+  const { nome, email, senha } = req.body;
 
-    const EmailCadastrado = await emailExistente(email);
+  const EmailCadastrado = await emailExistente(email);
 
-    if (EmailCadastrado.length > 0) {
-      return res.status(409).json({ mensagem: "Usuário já está cadastrado" });
-    }
-
-    const senhaCriptografada = await criptografarSenha(senha);
-
-    await usuarioCadastrado(nome, email, senhaCriptografada);
-
-    res.status(201).json();
-  } catch (error) {
-    res.status(500).json({ mensagem: "Erro interno no servidor" });
+  if (EmailCadastrado.length > 0) {
+    throw ConflictRequestError("O Email já está cadastrado!");
   }
-};
+
+  const senhaCriptografada = await criptografarSenha(senha);
+
+  await usuarioCadastrado(nome, email, senhaCriptografada);
+
+  res.status(StatusCodes.CREATED).json();
+});
 
 module.exports = cadastrarUsuario;
