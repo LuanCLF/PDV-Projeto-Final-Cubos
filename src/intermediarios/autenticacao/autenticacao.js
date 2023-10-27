@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken");
-const {
-  obterUsuarioId,
-} = require("../../bancoDeDados/usuarioQuerys/queryFuncoes");
+const { obterUsuarioId } = require("../../provedor/usuarioQuerys/queryFuncoes");
 
 const hash = process.env.SENHA_JWT;
 

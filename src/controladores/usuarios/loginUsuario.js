@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { senhaJwt } = require("../../helpers/senhas/jwt");
 const {
   obterUsuarioEmail,
-} = require("../../bancoDeDados/usuarioQuerys/queryFuncoes");
+} = require("../../provedor/usuarioQuerys/queryFuncoes");
 const {
   UnauthorizedRequestError,
 } = require("../../helpers/erros/api-errors-helpers");

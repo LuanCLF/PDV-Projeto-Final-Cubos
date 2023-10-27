@@ -1,6 +1,6 @@
 const {
   listarCategoriasProd,
-} = require("../../bancoDeDados/produtosQuerys/queryFuncoesProdutos");
+} = require("../../provedor/produtosQuerys/queryFuncoes");
 const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
 
 const listarCategorias = contencaoDeErro(async (req, res) => {

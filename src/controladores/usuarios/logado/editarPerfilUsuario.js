@@ -2,7 +2,7 @@ const {
   obterUsuarioId,
   obterUsuarioEmail,
   atualizarUsuario,
-} = require("../../../bancoDeDados/usuarioQuerys/queryFuncoes");
+} = require("../../../provedor/usuarioQuerys/queryFuncoes");
 const {
   UnauthorizedRequestError,
   ConflictRequestError,

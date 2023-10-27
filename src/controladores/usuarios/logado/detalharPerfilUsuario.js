@@ -1,6 +1,6 @@
 const {
   obterUsuarioId,
-} = require("../../../bancoDeDados/usuarioQuerys/queryFuncoes");
+} = require("../../../provedor/usuarioQuerys/queryFuncoes");
 const {
   UnauthorizedRequestError,
 } = require("../../../helpers/erros/api-errors-helpers");

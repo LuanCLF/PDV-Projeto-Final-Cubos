@@ -1,11 +1,11 @@
 const { StatusCodes } = require("http-status-codes");
-const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
 const {
-  cadastrarProdutos,
   verificarCategoria,
 } = require("../../provedor/produtosQuerys/queryFuncoes");
+const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
 
-const cadastrarProduto = contencaoDeErro(async (req, res) => {
+const editarProduto = contencaoDeErro(async (req, res) => {
+  const { id } = req.params;
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
 
   fieldValidator(
@@ -19,9 +19,15 @@ const cadastrarProduto = contencaoDeErro(async (req, res) => {
     throw NotFoundError("Digite um Id de categoria cadastrado!");
   }
 
-  await cadastrarProdutos(descricao, quantidade_estoque, valor, categoria_id);
+  await atualizarProduto(
+    id,
+    descricao,
+    quantidade_estoque,
+    valor,
+    categoria_id
+  );
 
   res.status(StatusCodes.OK).json();
 });
 
-module.exports = { cadastrarProduto };
+module.exports = { editarProduto };
