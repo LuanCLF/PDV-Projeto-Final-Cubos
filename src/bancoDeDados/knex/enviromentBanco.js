@@ -20,7 +20,7 @@ const pegarEnviroment = () => {
       directory: path.resolve(__dirname, "..", "seeds"),
     },
   };
-  console.log(process.env.VERCEL_DB_TEST);
+
   const test = {
     ...dev,
     connection: {
