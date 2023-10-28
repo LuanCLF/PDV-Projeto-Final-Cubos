@@ -8,6 +8,7 @@ const {
 const {
   UnauthorizedRequestError,
 } = require("../../helpers/erros/api-errors-helpers");
+const { StatusCodes } = require("http-status-codes");
 
 const loginUsuario = contencaoDeErro(async (req, res) => {
   const { email, senha: senhaEntrada } = req.body;
@@ -27,7 +28,7 @@ const loginUsuario = contencaoDeErro(async (req, res) => {
 
   const token = jwt.sign({ id }, senhaJwt, { expiresIn: "8h" });
 
-  res.status(200).json({ usuario: { id, nome }, token });
+  res.status(StatusCodes.OK).json({ usuario: { id, nome }, token });
 });
 
 module.exports = loginUsuario;
