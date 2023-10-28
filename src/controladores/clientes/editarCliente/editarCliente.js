@@ -1,19 +1,34 @@
 const {
-  checarSeExiste,
   atualizarCliente,
+  emailCliente,
+  cpfCliente,
+  obterCliente,
 } = require("../../../provedor/clientesQuerys/queryFuncoes");
 const {
   ConflictRequestError,
+  NotFoundError,
 } = require("../../../helpers/erros/api-errors-helpers");
+const { contencaoDeErro } = require("../../../helpers/erros/contencaoDeErro");
+const { StatusCodes } = require("http-status-codes");
 
-const editarCliente = async (req, res) => {
+const editarCliente = contencaoDeErro(async (req, res) => {
   const { nome, email, cpf, cep } = req.body;
   const id = req.params.id;
 
-  const seExiste = await checarSeExiste(cpf, email);
+  const naoExisteCliente = await obterCliente(id);
 
-  if (seExiste) {
-    throw ConflictRequestError("Email ou CPF já cadastrados");
+  if (naoExisteCliente) {
+    throw NotFoundError("Cliente não existe");
+  }
+
+  const existeEmail = await emailCliente(email);
+  const existeCpf = await cpfCliente(cpf);
+
+  if (existeEmail) {
+    throw ConflictRequestError("email ja existe");
+  }
+  if (existeCpf) {
+    throw ConflictRequestError("cpf ja existe");
   }
 
   let { logradouro, ddd, bairro, localidade, uf } = await (
@@ -28,23 +43,9 @@ const editarCliente = async (req, res) => {
     estado: uf,
   };
 
-  console.log(endereco);
-  // await atualizarCliente(id, { nome, email, cpf, cep });
+  await atualizarCliente(id, { nome, email, cpf, ...enderecoAtualizado });
 
-  // CREATE TABLE clientes (
-  //   id SERIAL PRIMARY KEY NOT NULL,
-  //   nome VARCHAR(100) NOT NULL,
-  //   email VARCHAR(50) NOT NULL UNIQUE,
-  //   cpf VARCHAR(11) NOT NULL UNIQUE,
-  //   cep VARCHAR(8),
-  //   rua VARCHAR(100),
-  //   numero VARCHAR(10),
-  //   bairro VARCHAR(100),
-  //   cidade VARCHAR(100),
-  //   estado VARCHAR(2)
-  //   );
-
-  res.json(endereco);
-};
+  res.status(StatusCodes.NO_CONTENT).json();
+});
 
 module.exports = { editarCliente };

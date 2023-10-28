@@ -1,12 +1,26 @@
 const {
   clienteCadastrado,
+  emailCliente,
+  cpfCliente,
 } = require("../../../provedor/clientesQuerys/queryFuncoes");
+const { contencaoDeErro } = require("../../../helpers/erros/contencaoDeErro");
+const { StatusCodes } = require("http-status-codes");
 
-const cadastrarCliente = async (req, res) => {
+const cadastrarCliente = contencaoDeErro(async (req, res) => {
   const { nome, email, cpf } = req.body;
-  const {} = req.usuario;
+
+  const existeEmail = await emailCliente(email);
+  const existeCpf = await cpfCliente(cpf);
+
+  if (existeEmail) {
+    throw ConflictRequestError("email ja existe");
+  }
+  if (existeCpf) {
+    throw ConflictRequestError("cpf ja existe");
+  }
 
   await clienteCadastrado(nome, email, cpf);
-};
+  res.status(StatusCodes.CREATED).json();
+});
 
 module.exports = { cadastrarCliente };
