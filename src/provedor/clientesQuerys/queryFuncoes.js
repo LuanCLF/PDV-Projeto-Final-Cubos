@@ -10,6 +10,19 @@ const clienteCadastrado = async (nome, email, cpf) => {
   return;
 };
 
+const checarSeExiste = async (cpf, email) => {
+  const cliente = await knex("clientes")
+    .orWhereLike("cpf", cpf || "")
+    .orWhereILike("email", email || "")
+    .select("id");
+
+  return !!cliente[0];
+};
+
+const atualizarCliente = async (id, dados) => {
+  await knex("clientes").where("id", id).update(dados);
+};
+
 const obterClientes = async (pagina, filtro) => {
   const clientes = await knex("clientes")
     .offset(pagina)
@@ -19,4 +32,9 @@ const obterClientes = async (pagina, filtro) => {
   return clientes;
 };
 
-module.exports = { clienteCadastrado, obterClientes };
+module.exports = {
+  clienteCadastrado,
+  checarSeExiste,
+  obterClientes,
+  atualizarCliente,
+};
