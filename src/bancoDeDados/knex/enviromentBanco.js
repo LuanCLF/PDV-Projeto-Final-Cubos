@@ -20,7 +20,7 @@ const pegarEnviroment = () => {
       directory: path.resolve(__dirname, "..", "seeds"),
     },
   };
-
+  
   const test = {
     ...dev,
     connection: {
