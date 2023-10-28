@@ -1,10 +1,7 @@
 const knex = require("../../bancoDeDados/conexao");
 
 const verificarCategoria = async (categoria_id) => {
-  const categoriaExistente = await __knex__("categorias").where(
-    "id",
-    categoria_id
-  );
+  const categoriaExistente = await knex("categorias").where("id", categoria_id);
 
   return categoriaExistente;
 };

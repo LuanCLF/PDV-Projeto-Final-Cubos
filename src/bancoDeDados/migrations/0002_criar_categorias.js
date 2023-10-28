@@ -3,12 +3,9 @@ exports.up = function (knex) {
     if (!exists) {
       return knex.schema
         .createTable("categorias", function (table) {
-          table.bigIncrements("id").primary().index();
-          table
-            .string("descricao")
-            .checkLength("<=", 100)
-            .index()
-            .notNullable();
+          table.bigIncrements("id").primary();
+
+          table.string("descricao").checkLength("<=", 100).notNullable();
 
           table.comment("tabela de categorias");
         })

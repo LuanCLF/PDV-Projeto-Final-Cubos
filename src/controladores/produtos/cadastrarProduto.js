@@ -8,17 +8,11 @@ const {
 const cadastrarProduto = contencaoDeErro(async (req, res) => {
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
 
-  fieldValidator(
-    ["descricao", "quantidade_estoque", "valor", "categoria_id"],
-    req.body
-  );
-
   const categoria = await verificarCategoria(categoria_id);
 
   if (!categoria) {
-    throw NotFoundError("Digite um Id de categoria cadastrado!");
+    throw NotFoundError("Categoria não encontrada.");
   }
-
   await cadastrarProdutos(descricao, quantidade_estoque, valor, categoria_id);
 
   res.status(StatusCodes.OK).json();
