@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const express = require("express");
 const rotas = require("./rotas/rotas");
 const { errorHandler } = require("./intermediarios");

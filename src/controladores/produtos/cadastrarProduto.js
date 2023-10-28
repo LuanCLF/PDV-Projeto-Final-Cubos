@@ -10,7 +10,9 @@ const cadastrarProduto = contencaoDeErro(async (req, res) => {
 
   const categoria = await verificarCategoria(categoria_id);
 
-
+  if (!categoria) {
+    throw NotFoundError("Categoria não encontrada.");
+  }
   await cadastrarProdutos(descricao, quantidade_estoque, valor, categoria_id);
 
   res.status(StatusCodes.OK).json();

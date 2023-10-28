@@ -41,7 +41,7 @@ estado VARCHAR(2)
 
 CREATE TABLE produtos(
 id SERIAL PRIMARY KEY NOT NULL,
-descricao TEXT NOT NULL,
+descricao VARCHAR(255) NOT NULL,
 quantidade_estoque INT NOT NULL,
 valor INT NOT NULL,
 categoria_id SERIAL REFERENCES categorias(id)

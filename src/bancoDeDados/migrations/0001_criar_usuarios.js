@@ -3,15 +3,13 @@ exports.up = function (knex) {
     if (!exists) {
       return knex.schema
         .createTable("usuarios", function (table) {
-          table.bigIncrements("id").primary().index();
-          table.string("nome").checkLength("<=", 100).index().notNullable();
-          table
-            .string("email")
-            .checkLength("<=", 50)
-            .unique()
-            .index()
-            .notNullable();
-          table.string("senha").checkLength("<=", 255).index().notNullable();
+          table.bigIncrements("id").primary().notNullable();
+
+          table.string("nome").checkLength("<=", 100).notNullable();
+
+          table.string("email").checkLength("<=", 50).unique().notNullable();
+
+          table.string("senha").checkLength("<=", 255).notNullable();
 
           table.comment("tabela de usuarios");
         })
