@@ -20,13 +20,11 @@ const pegarEnviroment = () => {
       directory: path.resolve(__dirname, "..", "seeds"),
     },
   };
-
+  console.log(process.env.VERCEL_DB_TEST);
   const test = {
     ...dev,
     connection: {
-      ...parse(
-        "postgres://default:6UrTAkGM2jZp@ep-nameless-disk-33483932-pooler.us-east-1.postgres.vercel-storage.com:5432/verceldb"
-      ),
+      ...parse(process.env.VERCEL_DB_TEST),
       ssl: { rejectUnauthorized: false },
     },
   };
