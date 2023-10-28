@@ -20,14 +20,16 @@ const pegarEnviroment = () => {
       directory: path.resolve(__dirname, "..", "seeds"),
     },
   };
-  
-  const test = {
-    ...dev,
-    connection: {
-      ...parse(process.env.VERCEL_DB_TEST),
-      ssl: { rejectUnauthorized: false },
-    },
-  };
+  let test;
+  if (process.env.NODE_ENV === "test") {
+    test = {
+      ...dev,
+      connection: {
+        ...parse(process.env.VERCEL_DB_TEST),
+        ssl: { rejectUnauthorized: false },
+      },
+    };
+  }
 
   const prod = {
     ...dev,
