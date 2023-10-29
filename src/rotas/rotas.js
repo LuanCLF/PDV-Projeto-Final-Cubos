@@ -17,11 +17,20 @@ const {
 const { editarProduto } = require("../controladores/produtos/editarProduto");
 const detalharProduto = require("../controladores/produtos/detalharProduto");
 const listarProdutos = require("../controladores/produtos/listarProdutos");
-const { excluirPorID } = require("../provedor/produtosQuerys/queryFuncoes");
-const { cadastrarCliente } = require("../controladores/clientes/cadastrarCliente/cadastrarCliente");
-const { detalharCliente } = require("../controladores/clientes/detalharCliente/detalharCliente");
-const { editarCliente } = require("../controladores/clientes/editarCliente/editarCliente");
-const { listarCliente } = require("../controladores/clientes/listarCliente/listarCliente");
+
+const {
+  cadastrarCliente,
+} = require("../controladores/clientes/cadastrarCliente/cadastrarCliente");
+const {
+  detalharCliente,
+} = require("../controladores/clientes/detalharCliente/detalharCliente");
+const {
+  editarCliente,
+} = require("../controladores/clientes/editarCliente/editarCliente");
+const {
+  listarCliente,
+} = require("../controladores/clientes/listarCliente/listarCliente");
+const { excluirProduto } = require("../controladores/produtos/excluirPorID");
 
 rotas.post(
   "/usuario",
@@ -39,15 +48,15 @@ rotas.put(
   validarRequisicao(usuarioSchema.editar),
   editarPerfilUsuario
 );
-rotas.post("/cliente", cadastrarCliente)
-rotas.get("/cliente", listarCliente)
-rotas.get("/clientes/:id", detalharCliente)
-rotas.put("/cliente/:id", editarCliente)
+rotas.post("/cliente", cadastrarCliente);
+rotas.get("/cliente", listarCliente);
+rotas.get("/clientes/:id", detalharCliente);
+rotas.put("/cliente/:id", editarCliente);
 
-rotas.post("/produto", cadastrarProduto);
-rotas.post("/produto/:id", editarProduto);
+rotas.put("/produto/:id", editarProduto);
 rotas.get("/produto/:id", detalharProduto);
+rotas.delete("/produto/:id", excluirProduto);
+rotas.post("/produto", cadastrarProduto);
 rotas.get("/produto", listarProdutos);
-rotas.delete("/produto/:id", excluirPorID);
 
 module.exports = rotas;

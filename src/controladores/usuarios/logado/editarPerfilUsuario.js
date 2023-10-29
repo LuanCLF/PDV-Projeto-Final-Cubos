@@ -9,6 +9,7 @@ const {
 } = require("../../../helpers/erros/api-errors-helpers");
 const { contencaoDeErro } = require("../../../helpers/erros/contencaoDeErro");
 const criptografarSenha = require("../../../helpers/senhas/criptografiaSenha");
+const { StatusCodes } = require("http-status-codes");
 
 const editarPerfilUsuario = contencaoDeErro(async (req, res) => {
   const { nome, email, senha } = req.body;
@@ -30,6 +31,6 @@ const editarPerfilUsuario = contencaoDeErro(async (req, res) => {
 
   await atualizarUsuario(id, nome, email, senhaCriptografada);
 
-  res.status(204).json();
+  res.status(StatusCodes.NO_CONTENT).json();
 });
 module.exports = editarPerfilUsuario;

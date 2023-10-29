@@ -1,3 +1,4 @@
+const { StatusCodes } = require("http-status-codes");
 const { NotFoundError } = require("../../helpers/erros/api-errors-helpers");
 const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
 const {
@@ -6,10 +7,13 @@ const {
 
 const detalharProduto = contencaoDeErro(async (req, res) => {
   const { id } = req.params;
+  
   const produtos = await detalharProdutos(id);
+
   if (!produtos) {
     throw NotFoundError("Produto não encontrado.");
   }
+
   res.status(StatusCodes.OK).json(produtos);
 });
 

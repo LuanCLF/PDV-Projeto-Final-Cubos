@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "test": "npm run knex:migrate && npm run knex:seed && vitest",
     "knex:migrate": "knex --knexfile ./src/bancoDeDados/knex/enviromentBanco.js migrate:latest",
     "knex:rollback": "knex --knexfile ./src/bancoDeDados/knex/enviromentBanco.js migrate:rollback",
     "knex:rollback-all": "knex --knexfile ./src/bancoDeDados/knex/enviromentBanco.js migrate:rollback --all",
-    "knex:seed": "knex --knexfile ./src/bancoDeDados/knex/enviromentBanco.js seed:run"
+    "knex:seed": "knex --knexfile ./src/bancoDeDados/knex/enviromentBanco.js seed:run",
+    "test": "cross-env NODE_ENV=test npm run knex:migrate && cross-env NODE_ENV=test npm run knex:seed && vitest",
+    "workflow-test": "npm run knex:migrate && npm run knex:seed && vitest"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "pg": "^8.11.3"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^3.0.1",
     "pg-connection-string": "^2.6.2",
     "pg-mem": "^1.8.6",

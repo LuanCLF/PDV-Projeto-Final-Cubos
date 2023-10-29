@@ -20,6 +20,7 @@ const pegarEnviroment = () => {
       directory: path.resolve(__dirname, "..", "seeds"),
     },
   };
+
   let test;
   if (process.env.NODE_ENV === "test") {
     test = {

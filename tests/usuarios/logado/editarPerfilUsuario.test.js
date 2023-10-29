@@ -1,8 +1,8 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { testServer } from "../../vitest.setup";
+import { testServer, tokenTest } from "../../vitest.setup";
 
-describe("testes para a rota de edição do perfil", () => {
-  let token = "";
+describe("testes para a rota de edição do perfil", async () => {
+  let token = `Bearer ${await tokenTest()}`;
 
   beforeAll(async () => {
     const resposta = await testServer.post("/login").send({
@@ -15,7 +15,7 @@ describe("testes para a rota de edição do perfil", () => {
   it("tenta editar o perfil mas não enviou nada", async () => {
     const resposta = await testServer
       .put("/usuario")
-      .set({ authorization: `Bearer ${token}` })
+      .set({ authorization: token })
       .send();
     expect(resposta.statusCode).toEqual(400);
   });
@@ -23,7 +23,7 @@ describe("testes para a rota de edição do perfil", () => {
   it("tenta editar o perfil mas o email já existe", async () => {
     const resposta = await testServer
       .put("/usuario")
-      .set({ authorization: `Bearer ${token}` })
+      .set({ authorization: token })
       .send({
         nome: "luan",
         email: "testeTesteB@gmail.com",

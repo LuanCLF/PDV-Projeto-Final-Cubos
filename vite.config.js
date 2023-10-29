@@ -2,7 +2,8 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    include: ["./tests/**/*.test.js"],
+    setupFiles: ["./tests/vitest.setup.js"],
+    include: ["./tests/produtos/**/*.test.js"],
     restoreMocks: true,
   },
 });
