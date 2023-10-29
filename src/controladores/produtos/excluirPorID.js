@@ -6,13 +6,13 @@ const { NotFoundError } = require("../../helpers/erros/api-errors-helpers");
 const excluirProduto = contencaoDeErro(async (req, res) => {
   const { id } = req.params;
 
-  const produto = await excluirPorID(id);
+  const produtoNaoExiste = await excluirPorID(id);
 
-  if (!produto) {
+  if (produtoNaoExiste) {
     throw NotFoundError("Produto não encontrado");
   }
 
   res.status(StatusCodes.OK).json({ message: "Produto excluído com sucesso" });
 });
 
-module.exports = excluirProduto;
+module.exports = { excluirProduto };

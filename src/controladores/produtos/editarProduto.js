@@ -1,16 +1,24 @@
 const { StatusCodes } = require("http-status-codes");
 const {
   verificarCategoria,
+  atualizarProduto,
+  checaSeProdutoExiste,
 } = require("../../provedor/produtosQuerys/queryFuncoes");
 const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
+const { NotFoundError } = require("../../helpers/erros/api-errors-helpers");
 
 const editarProduto = contencaoDeErro(async (req, res) => {
   const { id } = req.params;
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
 
-  const categoria = await verificarCategoria(categoria_id);
+  const produtoNaoExiste = await checaSeProdutoExiste(id);
 
-  if (!categoria) {
+  if (produtoNaoExiste) {
+    throw NotFoundError("Não existe produto com esse ID!");
+  }
+  const categoriaNaoExiste = await verificarCategoria(categoria_id);
+
+  if (categoriaNaoExiste) {
     throw NotFoundError("Digite um Id de categoria cadastrado!");
   }
 
@@ -22,7 +30,7 @@ const editarProduto = contencaoDeErro(async (req, res) => {
     categoria_id
   );
 
-  res.status(StatusCodes.OK).json();
+  return res.status(StatusCodes.NO_CONTENT).json();
 });
 
 module.exports = { editarProduto };

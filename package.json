@@ -9,7 +9,7 @@
     "knex:rollback": "knex --knexfile ./src/bancoDeDados/knex/enviromentBanco.js migrate:rollback",
     "knex:rollback-all": "knex --knexfile ./src/bancoDeDados/knex/enviromentBanco.js migrate:rollback --all",
     "knex:seed": "knex --knexfile ./src/bancoDeDados/knex/enviromentBanco.js seed:run",
-    "test": "npm run knex:migrate && npm run knex:seed && vitest"
+    "test": "NODE_ENV=test npm run knex:migrate && NODE_ENV=test npm run knex:seed && vitest"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "pg-connection-string": "^2.6.2",
     "pg-mem": "^1.8.6",
     "supertest": "^6.3.3",
-    "vitest": "^0.34.6"
+    "vitest": "^0.34.6",
+    "win-node-env": "^0.6.1"
   }
 }

@@ -1,8 +1,9 @@
 const supertest = require("supertest");
 const app = require("../src/server");
-
 process.env.NODE_ENV = "test";
+
 const testServer = supertest(app);
+process.env.NODE_ENV = "test";
 
 const tokenTest = async () => {
   const resposta = await testServer.post("/login").send({
