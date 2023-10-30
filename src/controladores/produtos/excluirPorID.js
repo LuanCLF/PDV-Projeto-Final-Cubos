@@ -1,9 +1,8 @@
 const { StatusCodes } = require("http-status-codes");
 const { excluirPorID } = require("../../provedor/produtosQuerys/queryFuncoes");
-const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
 const { NotFoundError } = require("../../helpers/erros/api-errors-helpers");
 
-const excluirProduto = contencaoDeErro(async (req, res) => {
+const excluirProduto = async (req, res) => {
   const { id } = req.params;
 
   const produtoNaoExiste = await excluirPorID(id);
@@ -13,6 +12,6 @@ const excluirProduto = contencaoDeErro(async (req, res) => {
   }
 
   res.status(StatusCodes.OK).json({ message: "Produto excluído com sucesso" });
-});
+};
 
 module.exports = { excluirProduto };

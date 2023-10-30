@@ -7,11 +7,10 @@ const {
   UnauthorizedRequestError,
   ConflictRequestError,
 } = require("../../../helpers/erros/api-errors-helpers");
-const { contencaoDeErro } = require("../../../helpers/erros/contencaoDeErro");
 const criptografarSenha = require("../../../helpers/senhas/criptografiaSenha");
 const { StatusCodes } = require("http-status-codes");
 
-const editarPerfilUsuario = contencaoDeErro(async (req, res) => {
+const editarPerfilUsuario = async (req, res) => {
   const { nome, email, senha } = req.body;
   const { id } = req.usuario;
 
@@ -32,5 +31,5 @@ const editarPerfilUsuario = contencaoDeErro(async (req, res) => {
   await atualizarUsuario(id, nome, email, senhaCriptografada);
 
   res.status(StatusCodes.NO_CONTENT).json();
-});
+};
 module.exports = editarPerfilUsuario;

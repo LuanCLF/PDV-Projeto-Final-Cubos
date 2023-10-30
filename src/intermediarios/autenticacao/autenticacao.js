@@ -11,36 +11,30 @@ const autenticacao = async (req, res, next) => {
     });
   }
 
+  const token = authorization.replace("Bearer ", "").trim();
+
+  let id;
   try {
-    const token = authorization.replace("Bearer ", "").trim();
-
-    let id;
-    try {
-      const { id: idUsuario } = jwt.verify(token, hash);
-      id = idUsuario;
-    } catch (error) {
-      return res.status(401).json({
-        mensagem: "Usuario não autenticado",
-      });
-    }
-    const usuarioExiste = await obterUsuarioId(id);
-
-    if (!usuarioExiste) {
-      return res.status(404).json({
-        mensagem: "Usuario não encontrado",
-      });
-    }
-
-    const { senha: _, ...usuario } = usuarioExiste;
-
-    req.usuario = usuario;
-
-    next();
+    const { id: idUsuario } = jwt.verify(token, hash);
+    id = idUsuario;
   } catch (error) {
-    return res.status(500).json({
-      mensagem: "Erro interno do servidor.",
+    return res.status(401).json({
+      mensagem: "Usuario não autenticado",
     });
   }
+  const usuarioExiste = await obterUsuarioId(id);
+
+  if (!usuarioExiste) {
+    return res.status(404).json({
+      mensagem: "Usuario não encontrado",
+    });
+  }
+
+  const { senha: _, ...usuario } = usuarioExiste;
+
+  req.usuario = usuario;
+
+  next();
 };
 
 module.exports = autenticacao;

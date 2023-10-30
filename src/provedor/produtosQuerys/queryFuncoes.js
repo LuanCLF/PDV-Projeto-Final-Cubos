@@ -44,7 +44,7 @@ const atualizarProduto = async (
     categoria_id,
   });
 
-  return produtoatualizado;
+  return;
 };
 
 const listarCategoriasProd = async () => {

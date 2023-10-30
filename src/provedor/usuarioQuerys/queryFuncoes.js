@@ -16,7 +16,7 @@ const obterUsuarioEmail = async (email) => {
 
 const obterUsuarioId = async (id) => {
   const perfilEncontradoId = await knex("usuarios").where({ id }).first();
-
+ 
   return perfilEncontradoId;
 };
 

@@ -1,4 +1,4 @@
-const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
+
 const { compare } = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { senhaJwt } = require("../../helpers/senhas/jwt");
@@ -10,7 +10,7 @@ const {
 } = require("../../helpers/erros/api-errors-helpers");
 const { StatusCodes } = require("http-status-codes");
 
-const loginUsuario = contencaoDeErro(async (req, res) => {
+const loginUsuario = async (req, res) => {
   const { email, senha: senhaEntrada } = req.body;
 
   const usuario = await obterUsuarioEmail(email);
@@ -29,6 +29,6 @@ const loginUsuario = contencaoDeErro(async (req, res) => {
   const token = jwt.sign({ id }, senhaJwt, { expiresIn: "8h" });
 
   res.status(StatusCodes.OK).json({ usuario: { id, nome }, token });
-});
+};
 
 module.exports = loginUsuario;
