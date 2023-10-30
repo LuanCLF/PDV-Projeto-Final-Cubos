@@ -1,11 +1,10 @@
 const { StatusCodes } = require("http-status-codes");
 const { NotFoundError } = require("../../../helpers/erros/api-errors-helpers");
-const { contencaoDeErro } = require("../../../helpers/erros/contencaoDeErro");
 const {
   obterClientes,
 } = require("../../../provedor/clientesQuerys/queryFuncoes");
 
-const listarCliente = contencaoDeErro(async (req, res) => {
+const listarCliente = async (req, res) => {
   let filtro = req.query.filtro;
   let pagina = Number(req.query.pagina);
 
@@ -17,6 +16,6 @@ const listarCliente = contencaoDeErro(async (req, res) => {
   }
 
   res.status(StatusCodes.OK).json(clientes);
-});
+};
 
 module.exports = { listarCliente };

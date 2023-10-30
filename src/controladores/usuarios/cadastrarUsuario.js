@@ -7,9 +7,8 @@ const {
   usuarioCadastrado,
 } = require("../../provedor/usuarioQuerys/queryFuncoes");
 const criptografarSenha = require("../../helpers/senhas/criptografiaSenha");
-const { contencaoDeErro } = require("../../helpers/erros/contencaoDeErro");
 
-const cadastrarUsuario = contencaoDeErro(async (req, res) => {
+const cadastrarUsuario = async (req, res) => {
   const { nome, email, senha } = req.body;
 
   const EmailCadastrado = await emailExistente(email);
@@ -23,6 +22,6 @@ const cadastrarUsuario = contencaoDeErro(async (req, res) => {
   await usuarioCadastrado(nome, email, senhaCriptografada);
 
   res.status(StatusCodes.CREATED).json();
-});
+};
 
 module.exports = cadastrarUsuario;

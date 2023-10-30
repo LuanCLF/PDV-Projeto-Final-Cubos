@@ -3,10 +3,9 @@ const {
   emailCliente,
   cpfCliente,
 } = require("../../../provedor/clientesQuerys/queryFuncoes");
-const { contencaoDeErro } = require("../../../helpers/erros/contencaoDeErro");
 const { StatusCodes } = require("http-status-codes");
 
-const cadastrarCliente = contencaoDeErro(async (req, res) => {
+const cadastrarCliente = async (req, res) => {
   const { nome, email, cpf } = req.body;
 
   const existeEmail = await emailCliente(email);
@@ -21,6 +20,6 @@ const cadastrarCliente = contencaoDeErro(async (req, res) => {
 
   await clienteCadastrado(nome, email, cpf);
   res.status(StatusCodes.CREATED).json();
-});
+};
 
 module.exports = { cadastrarCliente };

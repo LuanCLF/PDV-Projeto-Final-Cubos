@@ -1,4 +1,3 @@
-const { contencaoDeErro } = require("../../../helpers/erros/contencaoDeErro");
 const { StatusCodes } = require("http-status-codes");
 
 //tenchi quando for mexer, não precisa abrir trycatch, se estourar erro vai cair no middleware
@@ -16,8 +15,8 @@ ai pra usar os status code, é só importar a biblioteca StatusCodes e fazer ass
 res.status(StatusCodes.OK).json(cliente)
  */
 
-const detalharCliente = contencaoDeErro(async (req, res) => {
+const detalharCliente = async (req, res) => {
   //só escreve o codigo aqui sem abrir trycatch
-});
+};
 
 module.exports = { detalharCliente };

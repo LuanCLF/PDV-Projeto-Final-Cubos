@@ -8,10 +8,9 @@ const {
   ConflictRequestError,
   NotFoundError,
 } = require("../../../helpers/erros/api-errors-helpers");
-const { contencaoDeErro } = require("../../../helpers/erros/contencaoDeErro");
 const { StatusCodes } = require("http-status-codes");
 
-const editarCliente = contencaoDeErro(async (req, res) => {
+const editarCliente = async (req, res) => {
   const { nome, email, cpf, cep } = req.body;
   const id = req.params.id;
 
@@ -46,6 +45,6 @@ const editarCliente = contencaoDeErro(async (req, res) => {
   await atualizarCliente(id, { nome, email, cpf, ...enderecoAtualizado });
 
   res.status(StatusCodes.NO_CONTENT).json();
-});
+};
 
 module.exports = { editarCliente };
