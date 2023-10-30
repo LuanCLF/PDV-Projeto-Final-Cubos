@@ -22,7 +22,6 @@ const editarPerfilUsuario = async (req, res) => {
   }
 
   const emailUsuarioExiste = await obterUsuarioEmail(email);
-
   const idverificado = await verificarTodosOsEmails(emailUsuarioExiste, id);
   console.log(idverificado);
 

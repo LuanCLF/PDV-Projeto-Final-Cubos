@@ -38,7 +38,6 @@ const atualizarUsuario = async (id, nome, email, senhaCriptografada) => {
 
   return perfilUsuario;
 };
-
 const verificarTodosOsEmails = async (array, id) => {
   const perfilCompativel = array.every(
     (elementoAtual) => elementoAtual.id !== id
