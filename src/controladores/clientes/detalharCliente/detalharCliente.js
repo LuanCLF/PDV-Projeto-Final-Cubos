@@ -1,4 +1,3 @@
-const { contencaoDeErro } = require("../../../helpers/erros/contencaoDeErro");
 const { StatusCodes } = require("http-status-codes");
 
 //tenchi quando for mexer, não precisa abrir trycatch, se estourar erro vai cair no middleware
