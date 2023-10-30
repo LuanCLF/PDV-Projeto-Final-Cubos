@@ -2,6 +2,7 @@ const {
   obterUsuarioId,
   obterUsuarioEmail,
   atualizarUsuario,
+  verificarTodosOsEmails,
 } = require("../../../provedor/usuarioQuerys/queryFuncoes");
 const {
   UnauthorizedRequestError,
@@ -22,11 +23,22 @@ const editarPerfilUsuario = async (req, res) => {
 
   const emailUsuarioExiste = await obterUsuarioEmail(email);
 
+  const idverificado = await verificarTodosOsEmails(emailUsuarioExiste, id);
+  console.log(idverificado);
+
   if (emailUsuarioExiste.length > 0) {
-    throw ConflictRequestError("O email já existe");
+    if (idverificado) {
+      throw ConflictRequestError("O email já existe");
+    }
   }
 
   const senhaCriptografada = await criptografarSenha(senha);
+  console.log(
+    usuarioExiste.email,
+    emailUsuarioExiste,
+    email,
+    req.usuario.email
+  );
 
   await atualizarUsuario(id, nome, email, senhaCriptografada);
 
