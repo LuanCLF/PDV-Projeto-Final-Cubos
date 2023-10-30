@@ -1,4 +1,8 @@
-const { StatusCodes } = require("http-status-codes");
+const { StatusCodes } = require("http-status-codes")
+const { NotFoundError } = require("../../../helpers/erros/api-errors-helpers")
+const {
+    detalharClientes,
+} = require("../../../provedor/clientesQuerys/queryFuncoes")
 
 //tenchi quando for mexer, não precisa abrir trycatch, se estourar erro vai cair no middleware
 
@@ -16,7 +20,15 @@ res.status(StatusCodes.OK).json(cliente)
  */
 
 const detalharCliente = async (req, res) => {
-  //só escreve o codigo aqui sem abrir trycatch
-};
+    const { id } = req.params
 
-module.exports = { detalharCliente };
+    const cliente = await detalharClientes(id)
+
+    if (!cliente) {
+        throw NotFoundError("Cliente não encontrado.")
+    }
+
+    res.status(StatusCodes.OK).json(cliente)
+}
+
+module.exports = { detalharCliente }
