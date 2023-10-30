@@ -43,6 +43,7 @@ const verificarTodosOsEmails = async (array, id) => {
   const perfilCompativel = array.every(
     (elementoAtual) => elementoAtual.id !== id
   );
+
   return perfilCompativel;
 };
 

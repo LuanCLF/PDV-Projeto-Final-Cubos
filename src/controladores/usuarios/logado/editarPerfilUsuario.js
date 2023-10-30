@@ -39,7 +39,6 @@ const editarPerfilUsuario = async (req, res) => {
     email,
     req.usuario.email
   );
-
   await atualizarUsuario(id, nome, email, senhaCriptografada);
 
   res.status(StatusCodes.NO_CONTENT).json();
