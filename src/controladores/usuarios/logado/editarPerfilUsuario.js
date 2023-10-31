@@ -23,7 +23,6 @@ const editarPerfilUsuario = async (req, res) => {
 
   const emailUsuarioExiste = await obterUsuarioEmail(email);
   const idverificado = await verificarTodosOsEmails(emailUsuarioExiste, id);
-  console.log(idverificado);
 
   if (emailUsuarioExiste.length > 0) {
     if (idverificado) {
@@ -32,12 +31,7 @@ const editarPerfilUsuario = async (req, res) => {
   }
 
   const senhaCriptografada = await criptografarSenha(senha);
-  console.log(
-    usuarioExiste.email,
-    emailUsuarioExiste,
-    email,
-    req.usuario.email
-  );
+
   await atualizarUsuario(id, nome, email, senhaCriptografada);
 
   res.status(StatusCodes.NO_CONTENT).json();

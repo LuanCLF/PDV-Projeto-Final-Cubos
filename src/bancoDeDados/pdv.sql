@@ -1,4 +1,4 @@
---SCHEMA REMOVER O COMENTARIO NO DEPLOY--
+
 CREATE DATABASE pdv;
 
 CREATE TABLE usuarios(
@@ -46,9 +46,4 @@ quantidade_estoque INT NOT NULL,
 valor INT NOT NULL,
 categoria_id SERIAL REFERENCES categorias(id)
 )
-
---produto teste
----insert into produtos (descricao, quantidade_estoque, valor, categoria_id) 
---values ('celular iphone apple', 3, 5000, 2)
-
 
