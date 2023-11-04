@@ -3,9 +3,10 @@ const knex = require("../../bancoDeDados/conexao");
 const emailExistente = async (email) => {
   const emailUsuario = await knex("usuarios")
     .select("id")
-    .where("email", email);
+    .where("email", email)
+    .first();
 
-  return emailUsuario;
+  return !!emailUsuario;
 };
 
 const obterUsuarioEmail = async (email) => {

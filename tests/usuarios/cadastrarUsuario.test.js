@@ -23,9 +23,10 @@ describe("testes para rota de criação do usuário", () => {
   it("tenta criar mas não pode porque o usuário ja existe", async () => {
     const resposta = await testServer.post("/usuario").send({
       nome: "joao",
-      email: "testeTesteA@gmail.com",
+      email: "testeTesteCadastro0@teste.com",
       senha: "senha",
     });
+    
     expect(resposta.body).toStrictEqual({
       mensagem: mensagemDeErro.emailExistente,
     });

@@ -1,7 +1,7 @@
 const intermediarioDeErros = (err, req, res, next) => {
-  console.log(err);
+  console.log(err.mensagem);
   const statusCode = err.statusCode || 500;
-  const mensagem = err.messagem || "Erro interno no servidor";
+  const mensagem = err.mensagem || "Erro interno no servidor";
 
   res.status(statusCode).json({ mensagem });
 };

@@ -10,9 +10,9 @@ const { mensagemDeErro } = require("../../uteis/erros/mensagens");
 const cadastrarUsuario = async (req, res) => {
   const { nome, email, senha } = req.body;
 
-  const EmailCadastrado = await emailExistente(email);
+  const emailExiste = await emailExistente(email);
 
-  if (EmailCadastrado.length > 0) {
+  if (emailExiste) {
     throw ErroDeConflito(mensagemDeErro.emailExistente);
   }
 

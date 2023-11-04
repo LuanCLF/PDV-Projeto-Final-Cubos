@@ -5,6 +5,7 @@ exports.seed = async (knex) => {
   const inserirUsuarios = [
     { nome: "testeTesteA", email: "testeTesteA@gmail.com", senha },
     { nome: "testeTesteB", email: "testeTesteB@gmail.com", senha },
+    { nome: "testeTesteC", email: "testeTesteCadastro0@teste.com", senha },
   ];
   await knex("usuarios").insert(inserirUsuarios);
 };
