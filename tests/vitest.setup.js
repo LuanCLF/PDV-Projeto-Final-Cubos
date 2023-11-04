@@ -1,9 +1,20 @@
 const supertest = require("supertest");
 const app = require("../src/server");
+const knex = require("../src/bancoDeDados/conexao");
 process.env.NODE_ENV = "test";
 
 const testServer = supertest(app);
 process.env.NODE_ENV = "test";
+
+// Corrigi a declaração da função `beforeAll`
+const before = async () => {
+  await knex.migrate.latest();
+  await knex.seed.run();
+};
+
+const after = async () => {
+  await knex.destroy();
+};
 
 const tokenTest = async () => {
   const resposta = await testServer.post("/login").send({
@@ -13,4 +24,4 @@ const tokenTest = async () => {
   return resposta.body.token;
 };
 
-module.exports = { testServer, tokenTest };
+module.exports = { testServer, tokenTest, before, after };

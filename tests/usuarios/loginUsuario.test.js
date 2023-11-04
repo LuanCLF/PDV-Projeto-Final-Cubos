@@ -1,7 +1,14 @@
-import { describe, expect, it } from "vitest";
-import { testServer } from "../vitest.setup";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { after, before, testServer } from "../vitest.setup";
 
 describe("testes para rota de login do usuário", () => {
+  beforeAll(async () => {
+    await before();
+  });
+
+  afterAll(async () => {
+    await after();
+  });
   it("tenta logar e falha porque não enviou nada", async () => {
     const resposta = await testServer.post("/login").send();
 

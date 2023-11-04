@@ -1,8 +1,16 @@
-import { describe, expect, it } from "vitest";
-import { testServer, tokenTest } from "../vitest.setup";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { after, before, testServer, tokenTest } from "../vitest.setup";
 
 describe("testes para a rota de edição do produto", async () => {
   const token = `Bearer ${await tokenTest()}`;
+  beforeAll(async () => {
+    await before();
+  });
+
+  afterAll(async () => {
+    await after();
+  });
+
 
   it("tenta editar um produto mas o produto não existe", async () => {
     const resposta = await testServer

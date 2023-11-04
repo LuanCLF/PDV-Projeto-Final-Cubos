@@ -1,12 +1,16 @@
-import { afterAll, describe, expect, it } from "vitest";
-import { testServer } from "../vitest.setup";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { after, before, testServer } from "../vitest.setup";
 import knex from "../../src/bancoDeDados/conexao";
 
 describe("testes para rota de criação do usuário", () => {
   const email = "testeTesteCadastro@teste.com";
 
+  beforeAll(async () => {
+    await before();
+  });
+
   afterAll(async () => {
-    await knex("usuarios").delete().where("email", email);
+    await after();
   });
 
   it("tenta criar e falha porque não enviou nada", async () => {

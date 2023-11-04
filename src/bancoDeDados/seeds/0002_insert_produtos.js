@@ -1,10 +1,4 @@
 exports.seed = async (knex) => {
-  const [{ count }] = await knex("produtos").count("* as count");
-
-  if (Number.isInteger(count) || Number(count) > 0) {
-    return;
-  }
-
   const produtos = [
     {
       descricao: "celoroid iphono javoscripto",
