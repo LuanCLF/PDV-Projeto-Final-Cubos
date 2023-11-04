@@ -5,7 +5,7 @@ const {
   usuarioCadastrado,
 } = require("../../provedor/usuarioQuerys/queryFuncoes");
 const criptografarSenha = require("../../uteis/senhas/criptografiaSenha");
-const { mensagemDeErro } = require("../../uteis/erros/mensagens");
+const { erroEmailExistente } = require("../../uteis/erros/mensagens");
 
 const cadastrarUsuario = async (req, res) => {
   const { nome, email, senha } = req.body;
@@ -13,7 +13,7 @@ const cadastrarUsuario = async (req, res) => {
   const emailExiste = await emailExistente(email);
 
   if (emailExiste) {
-    throw ErroDeConflito(mensagemDeErro.emailExistente);
+    throw ErroDeConflito(erroEmailExistente);
   }
 
   const senhaCriptografada = await criptografarSenha(senha);

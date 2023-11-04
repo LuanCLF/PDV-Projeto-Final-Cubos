@@ -1,7 +1,6 @@
 const mensagemDeErro = {
-  emailExistente:'O email já está cadastrado!'
-}
+  erroEmailExistente: "O email já está cadastrado!",
+  erroEmailOuSenhaInvalidos: "Email ou senha invalidos!",
+};
 
-
-
-module.exports = {mensagemDeErro}
+module.exports = { ...mensagemDeErro };

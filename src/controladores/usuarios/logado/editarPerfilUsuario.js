@@ -22,10 +22,9 @@ const editarPerfilUsuario = async (req, res) => {
   }
 
   const emailUsuarioExiste = await obterUsuarioEmail(email);
-  const idverificado = await verificarTodosOsEmails(emailUsuarioExiste, id);
 
   if (emailUsuarioExiste.length > 0) {
-    if (idverificado) {
+    if (id !== emailUsuarioExiste) {
       throw ErroDeConflito("O email já existe");
     }
   }

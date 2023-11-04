@@ -3,7 +3,7 @@ import { after, before, testServer } from "../vitest.setup";
 import { mensagemDeErro } from "../../src/uteis/erros/mensagens";
 
 describe("testes para rota de criação do usuário", () => {
-  const email = "testeTesteCadastro@teste.com";
+  const email = "testeTesteCadastro1@teste.com";
 
   beforeAll(async () => {
     await before();
@@ -23,7 +23,7 @@ describe("testes para rota de criação do usuário", () => {
   it("tenta criar mas não pode porque o usuário ja existe", async () => {
     const resposta = await testServer.post("/usuario").send({
       nome: "joao",
-      email: "testeTesteCadastro0@teste.com",
+      email: "testeTesteCadastro@teste.com",
       senha: "senha",
     });
     
