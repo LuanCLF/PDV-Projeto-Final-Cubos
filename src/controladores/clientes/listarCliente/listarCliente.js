@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const { NotFoundError } = require("../../../helpers/erros/api-errors-helpers");
+const { ErroNaoEncontrado } = require("../../../uteis/erros/erroDaApi");
 const {
   obterClientes,
 } = require("../../../provedor/clientesQuerys/queryFuncoes");
@@ -12,7 +12,7 @@ const listarCliente = async (req, res) => {
 
   const clientes = await obterClientes(pagina, filtro);
   if (clientes.length < 1) {
-    throw NotFoundError("Clientes não encontrados");
+    throw ErroNaoEncontrado("Clientes não encontrados");
   }
 
   res.status(StatusCodes.OK).json(clientes);

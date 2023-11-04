@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { after, before, testServer } from "../vitest.setup";
-import knex from "../../src/bancoDeDados/conexao";
+import { mensagemDeErro } from "../../src/uteis/erros/mensagens";
 
 describe("testes para rota de criação do usuário", () => {
   const email = "testeTesteCadastro@teste.com";
@@ -16,6 +16,7 @@ describe("testes para rota de criação do usuário", () => {
   it("tenta criar e falha porque não enviou nada", async () => {
     const resposta = await testServer.post("/usuario").send();
 
+    expect(resposta.body).toHaveProperty("mensagem");
     expect(resposta.statusCode).toEqual(400);
   });
 
@@ -25,8 +26,10 @@ describe("testes para rota de criação do usuário", () => {
       email: "testeTesteA@gmail.com",
       senha: "senha",
     });
-
-    expect(resposta.statusCode).toEqual(409);
+    expect(resposta.body).toStrictEqual({
+      mensagem: mensagemDeErro.emailExistente,
+    });
+    expect(resposta.statusCode).toStrictEqual(409);
   });
 
   it("tenta criar e consegue", async () => {

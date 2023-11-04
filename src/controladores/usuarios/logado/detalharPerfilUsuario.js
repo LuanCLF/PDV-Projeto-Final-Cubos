@@ -1,9 +1,7 @@
 const {
   obterUsuarioId,
 } = require("../../../provedor/usuarioQuerys/queryFuncoes");
-const {
-  UnauthorizedRequestError,
-} = require("../../../helpers/erros/api-errors-helpers");
+const { ErroNaoAutorizado } = require("../../../uteis/erros/erroDaApi");
 const { StatusCodes } = require("http-status-codes");
 
 const detalharPerfilUsuario = async (req, res) => {
@@ -12,7 +10,7 @@ const detalharPerfilUsuario = async (req, res) => {
   const perfilUsuario = await obterUsuarioId(id);
 
   if (!perfilUsuario) {
-    throw UnauthorizedRequestError("Usuário não autorizado");
+    throw ErroNaoAutorizado("Usuário não autorizado");
   }
 
   res.status(StatusCodes.OK).json(req.usuario);

@@ -1,13 +1,10 @@
-
 const { compare } = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { senhaJwt } = require("../../helpers/senhas/jwt");
+const { senhaJwt } = require("../../uteis/senhas/jwt");
 const {
   obterUsuarioEmail,
 } = require("../../provedor/usuarioQuerys/queryFuncoes");
-const {
-  UnauthorizedRequestError,
-} = require("../../helpers/erros/api-errors-helpers");
+const { ErroNaoAutorizado } = require("../../uteis/erros/erroDaApi");
 const { StatusCodes } = require("http-status-codes");
 
 const loginUsuario = async (req, res) => {
@@ -16,14 +13,14 @@ const loginUsuario = async (req, res) => {
   const usuario = await obterUsuarioEmail(email);
 
   if (usuario.length < 1) {
-    throw UnauthorizedRequestError("Email ou senha inválidos");
+    throw ErroNaoAutorizado("Email ou senha inválidos");
   }
 
   const { id, senha, nome } = usuario[0];
   const senhaCorreta = await compare(senhaEntrada, senha);
 
   if (!senhaCorreta) {
-    throw UnauthorizedRequestError("Email ou senha inválidos");
+    throw ErroNaoAutorizado("Email ou senha inválidos");
   }
 
   const token = jwt.sign({ id }, senhaJwt, { expiresIn: "8h" });

@@ -5,10 +5,10 @@ const {
   verificarTodosOsEmails,
 } = require("../../../provedor/usuarioQuerys/queryFuncoes");
 const {
-  UnauthorizedRequestError,
-  ConflictRequestError,
-} = require("../../../helpers/erros/api-errors-helpers");
-const criptografarSenha = require("../../../helpers/senhas/criptografiaSenha");
+  ErroNaoAutorizado,
+  ErroDeConflito,
+} = require("../../../uteis/erros/erroDaApi");
+const criptografarSenha = require("../../../uteis/senhas/criptografiaSenha");
 const { StatusCodes } = require("http-status-codes");
 
 const editarPerfilUsuario = async (req, res) => {
@@ -18,7 +18,7 @@ const editarPerfilUsuario = async (req, res) => {
   const usuarioExiste = await obterUsuarioId(id);
 
   if (!usuarioExiste) {
-    throw UnauthorizedRequestError("Não autorizado");
+    throw ErroNaoAutorizado("Não autorizado");
   }
 
   const emailUsuarioExiste = await obterUsuarioEmail(email);
@@ -26,7 +26,7 @@ const editarPerfilUsuario = async (req, res) => {
 
   if (emailUsuarioExiste.length > 0) {
     if (idverificado) {
-      throw ConflictRequestError("O email já existe");
+      throw ErroDeConflito("O email já existe");
     }
   }
 
