@@ -1,38 +1,39 @@
 const jwt = require("jsonwebtoken");
 const { obterUsuarioId } = require("../../provedor/usuarioQuerys/queryFuncoes");
-
-const hash = process.env.SENHA_JWT;
+const { senhaJwt } = require("../../uteis/senhas/jwt");
+const {
+  ErroNaoAutorizado,
+  ErroNaoEncontrado,
+} = require("../../uteis/erros/erroDaApi");
+const {
+  erroNaoAutorizado,
+  erroUsuarioNaoEncontrado,
+} = require("../../uteis/erros/mensagens");
 
 const autenticacao = async (req, res, next) => {
   const { authorization } = req.headers;
+  
   if (!authorization) {
-    return res.status(401).json({
-      mensagem: "Não autorizado",
-    });
+    throw ErroNaoAutorizado(erroNaoAutorizado + "bebebeb");
   }
 
   const token = authorization.replace("Bearer ", "").trim();
 
   let id;
   try {
-    const { id: idUsuario } = jwt.verify(token, hash);
+    const { id: idUsuario } = jwt.verify(token, senhaJwt);
     id = idUsuario;
   } catch (error) {
-    return res.status(401).json({
-      mensagem: "Usuario não autenticado",
-    });
+    throw ErroNaoAutorizado(erroNaoAutorizado + "bebebeb");
   }
+
   const usuarioExiste = await obterUsuarioId(id);
 
   if (!usuarioExiste) {
-    return res.status(404).json({
-      mensagem: "Usuario não encontrado",
-    });
+    throw ErroNaoEncontrado(erroUsuarioNaoEncontrado);
   }
 
-  const { senha: _, ...usuario } = usuarioExiste;
-
-  req.usuario = usuario;
+  req.usuario = usuarioExiste;
 
   next();
 };

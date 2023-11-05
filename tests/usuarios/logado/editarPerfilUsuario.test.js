@@ -17,7 +17,7 @@ describe("testes para a rota de edição do perfil", async () => {
       .put("/usuario")
       .set({ authorization: token })
       .send();
-    expect(resposta.statusCode).toEqual(400);
+    expect(resposta.statusCode).toEqual(401);
   });
 });
 

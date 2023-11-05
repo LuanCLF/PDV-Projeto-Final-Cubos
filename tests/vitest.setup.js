@@ -18,9 +18,10 @@ const after = async () => {
 
 const tokenTest = async () => {
   const resposta = await testServer.post("/login").send({
-    email: "testeTesteA@gmail.com",
+    email: "testeTesteLogin@teste.com",
     senha: "senha",
   });
+  
   return resposta.body.token;
 };
 

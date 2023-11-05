@@ -10,6 +10,7 @@ describe("testes para rota de login do usuário", () => {
   afterAll(async () => {
     await after();
   });
+
   it("tenta logar e falha porque não enviou nada", async () => {
     const resposta = await testServer.post("/login").send();
 
@@ -29,9 +30,10 @@ describe("testes para rota de login do usuário", () => {
 
   it("tenta logar mas não consegue porque a senha tá errada", async () => {
     const resposta = await testServer.post("/login").send({
-      email: "testeTesteLogin@gmail.com",
+      email: "testeTesteLogin@teste.com",
       senha: "senhaA",
     });
+
     expect(resposta.body).toStrictEqual({
       mensagem: erroEmailOuSenhaInvalidos,
     });
@@ -43,7 +45,7 @@ describe("testes para rota de login do usuário", () => {
       email: "testeTesteLogin@teste.com",
       senha: "senha",
     });
-    
+
     expect(resposta.body).toHaveProperty("usuario");
     expect(resposta.body).toHaveProperty("usuario.id");
     expect(resposta.body).toHaveProperty("usuario.nome");

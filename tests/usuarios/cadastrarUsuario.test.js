@@ -1,6 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { after, before, testServer } from "../vitest.setup";
-import { mensagemDeErro } from "../../src/uteis/erros/mensagens";
+import {
+  erroEmailExistente,
+} from "../../src/uteis/erros/mensagens";
 
 describe("testes para rota de criação do usuário", () => {
   const email = "testeTesteCadastro1@teste.com";
@@ -26,9 +28,9 @@ describe("testes para rota de criação do usuário", () => {
       email: "testeTesteCadastro@teste.com",
       senha: "senha",
     });
-    
+
     expect(resposta.body).toStrictEqual({
-      mensagem: mensagemDeErro.emailExistente,
+      mensagem: erroEmailExistente,
     });
     expect(resposta.statusCode).toStrictEqual(409);
   });
@@ -39,6 +41,7 @@ describe("testes para rota de criação do usuário", () => {
       email,
       senha: "senha",
     });
+    
     expect(resposta.body).toHaveLength(0);
     expect(resposta.statusCode).toEqual(201);
   });
