@@ -5,6 +5,10 @@ const {
   checaSeProdutoExiste,
 } = require("../../provedor/produtosQuerys/queryFuncoes");
 const { ErroNaoEncontrado } = require("../../uteis/erros/erroDaApi");
+const {
+  erroProdutoNaoEncontrado,
+  erroCategoriaNaoEncontrada,
+} = require("../../uteis/erros/mensagens");
 
 const editarProduto = async (req, res) => {
   const { id } = req.params;
@@ -13,21 +17,20 @@ const editarProduto = async (req, res) => {
   const produtoNaoExiste = await checaSeProdutoExiste(id);
 
   if (produtoNaoExiste) {
-    throw ErroNaoEncontrado("Não existe produto com esse ID!");
+    throw ErroNaoEncontrado(erroProdutoNaoEncontrado);
   }
   const categoriaNaoExiste = await verificarCategoria(categoria_id);
 
   if (categoriaNaoExiste) {
-    throw ErroNaoEncontrado("Digite um Id de categoria cadastrado!");
+    throw ErroNaoEncontrado(erroCategoriaNaoEncontrada);
   }
 
-  await atualizarProduto(
-    id,
+  await atualizarProduto(id, {
     descricao,
     quantidade_estoque,
     valor,
-    categoria_id
-  );
+    categoria_id,
+  });
 
   return res.status(StatusCodes.NO_CONTENT).json();
 };
