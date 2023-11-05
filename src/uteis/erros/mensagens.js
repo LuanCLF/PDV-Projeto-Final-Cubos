@@ -4,6 +4,7 @@ const mensagemDeErro = {
   erroNaoAutorizado: "Usuário não autorizado!",
   erroUsuarioNaoEncontrado: "Usuário não encontrado.",
   erroCategoriaNaoEncontrada: "Categoria não encontrada.",
+  erroProdutoNaoEncontrado: "Produto não encontrado.",
 };
 
 module.exports = { ...mensagemDeErro };
