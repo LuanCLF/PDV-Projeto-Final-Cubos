@@ -1,4 +1,5 @@
 const knex = require("../../bancoDeDados/conexao");
+const { obterClientes } = require("../clientesQuerys/queryFuncoes");
 
 const verificarCategoria = async (id) => {
   const categoriaExistente = await knex("categorias").where({ id }).first();
@@ -29,8 +30,18 @@ const listarCategoriasProd = async () => {
   return categorias;
 };
 
-const obterProdutos = async () => {
-  const produtos = await knex("produtos");
+const obterProdutos = async (pagina, filtro) => {
+  const produtos = knex("produtos")
+    .modify((query) => {
+      if (filtro && filtro.length) {
+        filtro.forEach((item) => {
+          query.orWhereLike("descricao", `%${item}%`);
+        });
+      }
+    })
+    .offset(pagina)
+    .limit(10);
+
   return produtos;
 };
 

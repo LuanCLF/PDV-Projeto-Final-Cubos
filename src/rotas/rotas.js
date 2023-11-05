@@ -32,7 +32,7 @@ const {
 } = require("../controladores/clientes/editarCliente/editarCliente")
 const {
     listarCliente,
-} = require("../controladores/clientes/listarCliente/listarCliente")
+} = require("../controladores/clientes/listarClientes/listarClientes")
 const { excluirProduto } = require("../controladores/produtos/excluirProduto")
 
 rotas.post(
