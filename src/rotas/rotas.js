@@ -33,7 +33,7 @@ const {
 const {
     listarCliente,
 } = require("../controladores/clientes/listarCliente/listarCliente")
-const { excluirProduto } = require("../controladores/produtos/excluirPorID")
+const { excluirProduto } = require("../controladores/produtos/excluirProduto")
 
 rotas.post(
     "/usuario",

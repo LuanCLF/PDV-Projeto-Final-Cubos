@@ -12,6 +12,12 @@ exports.seed = async (knex) => {
       valor: 5000,
       categoria_id: 2,
     },
+    {
+      descricao: "deletarrrrr",
+      quantidade_estoque: 3,
+      valor: 5000,
+      categoria_id: 1,
+    },
   ];
 
   await knex("produtos").insert(produtos);
