@@ -3,6 +3,7 @@ const mensagemDeErro = {
   erroEmailOuSenhaInvalidos: "Email ou senha inválidos!",
   erroNaoAutorizado: "Usuário não autorizado!",
   erroUsuarioNaoEncontrado: "Usuário não encontrado.",
+  erroCategoriaNaoEncontrada: "Categoria não encontrada.",
 };
 
 module.exports = { ...mensagemDeErro };
