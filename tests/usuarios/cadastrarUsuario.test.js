@@ -1,8 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { after, before, testServer } from "../vitest.setup";
-import {
-  erroEmailExistente,
-} from "../../src/uteis/erros/mensagens";
+import { erroEmailExistente } from "../../src/uteis/erros/mensagens";
 
 describe("testes para rota de criação do usuário", () => {
   const email = "testeTesteCadastro1@teste.com";

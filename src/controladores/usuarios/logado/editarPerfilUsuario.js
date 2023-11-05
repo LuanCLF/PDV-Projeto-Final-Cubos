@@ -2,12 +2,15 @@ const {
   obterUsuarioId,
   obterUsuarioEmail,
   atualizarUsuario,
-  verificarTodosOsEmails,
 } = require("../../../provedor/usuarioQuerys/queryFuncoes");
 const {
   ErroNaoAutorizado,
   ErroDeConflito,
 } = require("../../../uteis/erros/erroDaApi");
+const {
+  erroNaoAutorizado,
+  erroEmailExistente,
+} = require("../../../uteis/erros/mensagens");
 const criptografarSenha = require("../../../uteis/senhas/criptografiaSenha");
 const { StatusCodes } = require("http-status-codes");
 
@@ -18,14 +21,14 @@ const editarPerfilUsuario = async (req, res) => {
   const usuarioExiste = await obterUsuarioId(id);
 
   if (!usuarioExiste) {
-    throw ErroNaoAutorizado("Não autorizado");
+    throw ErroNaoAutorizado(erroNaoAutorizado);
   }
 
   const emailUsuarioExiste = await obterUsuarioEmail(email);
 
-  if (emailUsuarioExiste.length > 0) {
-    if (id !== emailUsuarioExiste) {
-      throw ErroDeConflito("O email já existe");
+  if (emailUsuarioExiste) {
+    if (id !== emailUsuarioExiste.id) {
+      throw ErroDeConflito(erroEmailExistente);
     }
   }
 
@@ -35,4 +38,5 @@ const editarPerfilUsuario = async (req, res) => {
 
   res.status(StatusCodes.NO_CONTENT).json();
 };
+
 module.exports = editarPerfilUsuario;

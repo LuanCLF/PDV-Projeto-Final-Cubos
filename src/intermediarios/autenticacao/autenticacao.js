@@ -12,9 +12,9 @@ const {
 
 const autenticacao = async (req, res, next) => {
   const { authorization } = req.headers;
-  
+
   if (!authorization) {
-    throw ErroNaoAutorizado(erroNaoAutorizado + "bebebeb");
+    throw ErroNaoAutorizado(erroNaoAutorizado);
   }
 
   const token = authorization.replace("Bearer ", "").trim();
@@ -24,7 +24,7 @@ const autenticacao = async (req, res, next) => {
     const { id: idUsuario } = jwt.verify(token, senhaJwt);
     id = idUsuario;
   } catch (error) {
-    throw ErroNaoAutorizado(erroNaoAutorizado + "bebebeb");
+    throw ErroNaoAutorizado(erroNaoAutorizado);
   }
 
   const usuarioExiste = await obterUsuarioId(id);
