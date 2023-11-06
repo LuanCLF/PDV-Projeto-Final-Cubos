@@ -45,7 +45,6 @@ describe("testes para a rota de cadastro do produto", async () => {
       .post("/produto")
       .set({ authorization: token })
       .send({ ...produto, categoria_id: 1 });
-    
 
     expect(resposta.statusCode).toEqual(201);
   });

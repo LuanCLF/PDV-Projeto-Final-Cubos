@@ -39,7 +39,7 @@ describe("testes para rota de criação do usuário", () => {
       email,
       senha: "senha",
     });
-    
+
     expect(resposta.body).toHaveLength(0);
     expect(resposta.statusCode).toEqual(201);
   });

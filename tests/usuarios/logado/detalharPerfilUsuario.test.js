@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { after, before, testServer, tokenTest } from "../../vitest.setup";
 
-
 describe("testes para a rota de detalhar perfil do usuário", async () => {
   let token;
   beforeAll(async () => {
