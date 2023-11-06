@@ -2,10 +2,10 @@ const {
   clienteCadastrado,
   emailCliente,
   cpfCliente,
-} = require("../../../provedor/clientesQuerys/queryFuncoes");
+} = require("../../provedor/clientesQuerys/queryFuncoes");
 const { StatusCodes } = require("http-status-codes");
 
-const { ErroDeConflito } = require("../../../uteis/erros/erroDaApi");
+const { ErroDeConflito } = require("../../uteis/erros/erroDaApi");
 
 const cadastrarCliente = async (req, res) => {
   const { nome, email, cpf } = req.body;

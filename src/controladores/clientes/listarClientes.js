@@ -1,8 +1,8 @@
 const { StatusCodes } = require("http-status-codes");
-const { ErroNaoEncontrado } = require("../../../uteis/erros/erroDaApi");
+const { ErroNaoEncontrado } = require("../../uteis/erros/erroDaApi");
 const {
   obterClientes,
-} = require("../../../provedor/clientesQuerys/queryFuncoes");
+} = require("../../provedor/clientesQuerys/queryFuncoes");
 
 const listarCliente = async (req, res) => {
   let filtro = req.query.filtro;

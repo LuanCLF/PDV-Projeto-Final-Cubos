@@ -49,7 +49,6 @@ describe("testes para a rota de edição do produto", async () => {
       .put("/produto/2")
       .set({ authorization: token })
       .send({ ...produto, categoria_id: 4 });
-    console.log(resposta.body);
 
     expect(resposta.statusCode).toEqual(204);
   });

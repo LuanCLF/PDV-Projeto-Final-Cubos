@@ -1,8 +1,8 @@
 const { StatusCodes } = require("http-status-codes");
-const { ErroNaoEncontrado } = require("../../../uteis/erros/erroDaApi");
+const { ErroNaoEncontrado } = require("../../uteis/erros/erroDaApi");
 const {
   detalharClientes,
-} = require("../../../provedor/clientesQuerys/queryFuncoes");
+} = require("../../provedor/clientesQuerys/queryFuncoes");
 
 const detalharCliente = async (req, res) => {
   const { id } = req.params;

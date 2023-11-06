@@ -34,8 +34,14 @@ const obterCliente = async (id) => {
 };
 
 const obterClientes = async (pagina, filtro) => {
-  const clientes = await knex("clientes")
-    .orWhereILike("nome", `%${filtro || ""}%`)
+  const clientes = knex("clientes")
+    .modify((query) => {
+      if (filtro && filtro.length) {
+        filtro.forEach((item) => {
+          query.orWhereLike("nome", `%${item}%`);
+        });
+      }
+    })
     .offset(pagina)
     .limit(10);
 
