@@ -30,6 +30,8 @@ const {
 const { editarCliente } = require("../controladores/clientes/editarCliente");
 const { listarCliente } = require("../controladores/clientes/listarClientes");
 const { excluirProduto } = require("../controladores/produtos/excluirProduto");
+const { cadastrarPedido } = require("../controladores/pedidos/cadastrarPedido");
+const { listarPedidos } = require("../controladores/pedidos/listarPedidos");
 
 rotas.post(
   "/usuario",
@@ -73,5 +75,8 @@ rotas.post(
   cadastrarProduto
 );
 rotas.get("/produto", listarProdutos);
+
+rotas.post("/pedido", cadastrarPedido);
+rotas.get("/pedido", listarPedidos);
 
 module.exports = rotas;
