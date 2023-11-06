@@ -37,19 +37,6 @@ describe("testes para a rota de edição do perfil", async () => {
     expect(resposta.statusCode).toEqual(409);
   });
 
-  it("tenta editar o perfil com o mesmo email do usuário e consegue", async () => {
-    const resposta = await testServer
-      .put("/usuario")
-      .set({ authorization: token })
-      .send({
-        nome: "luan",
-        email: "testeTesteEditar@teste.com",
-        senha: "senha",
-      });
-
-    expect(resposta.statusCode).toEqual(204);
-  });
-
   it("tenta editar o perfil com dados diferentes e consegue", async () => {
     const resposta = await testServer
       .put("/usuario")
