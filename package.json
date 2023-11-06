@@ -10,7 +10,7 @@
     "knex:rollback-all": "knex --knexfile ./src/bancoDeDados/knex/enviromentBanco.js migrate:rollback --all",
     "knex:seed": "knex --knexfile ./src/bancoDeDados/knex/enviromentBanco.js seed:run",
     "workflow-test": "npm run knex:migrate && npm run knex:seed && vitest",
-    "test": "vitest"
+    "test": "cross-env NODE_ENV=test && vitest"
   },
   "repository": {
     "type": "git",
