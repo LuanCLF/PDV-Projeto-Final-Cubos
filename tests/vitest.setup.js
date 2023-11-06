@@ -1,10 +1,8 @@
 const supertest = require("supertest");
 const app = require("../src/server");
 const knex = require("../src/bancoDeDados/conexao");
-process.env.NODE_ENV = "test";
 
 const testServer = supertest(app);
-process.env.NODE_ENV = "test";
 
 const before = async () => {
   await knex.migrate.latest();
