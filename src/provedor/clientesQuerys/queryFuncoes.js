@@ -30,20 +30,14 @@ const atualizarCliente = async (id, dados) => {
 const obterCliente = async (id) => {
   const cliente = await knex("clientes").where("id", id).select("id");
 
-  return !cliente[0];
-};
+    return !cliente[0]
+}
 
 const obterClientes = async (pagina, filtro) => {
-  const clientes = knex("clientes")
-    .modify((query) => {
-      if (filtro && filtro.length) {
-        filtro.forEach((item) => {
-          query.orWhereLike("nome", `%${item}%`);
-        });
-      }
-    })
-    .offset(pagina)
-    .limit(10);
+    const clientes = await knex("clientes")
+        .offset(pagina)
+        .limit(10)
+        .orWhereILike("nome", `%${filtro || ""}%`)
 
   return clientes;
 };
