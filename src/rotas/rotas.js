@@ -34,6 +34,10 @@ const {
     listarCliente,
 } = require("../controladores/clientes/listarCliente/listarCliente")
 const { excluirProduto } = require("../controladores/produtos/excluirPorID")
+const {
+    cadastrarPedido,
+} = require("../controladores/pedidos/cadastrarPedido/cadastrarPedido")
+const listarPedido = require("../controladores/pedidos/cadastrarPedido/listarPedido")
 
 rotas.post(
     "/usuario",
@@ -78,4 +82,6 @@ rotas.post(
 )
 rotas.get("/produto", listarProdutos)
 
+rotas.post("/pedido", cadastrarPedido)
+rotas.get("/pedido", listarPedido)
 module.exports = rotas
