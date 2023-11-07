@@ -63,11 +63,17 @@ const detalharProdutos = async (id) => {
   return produto;
 };
 
-const excluirPorID = async (id) => {
+const   excluirPorID = async (id) => {
   const produto = await knex("produtos").where({ id }).del();
 
   return !produto;
 };
+
+const procurarProdutosEmPedidos = async (produto_id) =>{
+  const produtoPedido = await knex("pedido_produtos").where({produto_id});
+
+  return produtoPedido;
+}
 
 module.exports = {
   verificarCategoria,
@@ -78,4 +84,5 @@ module.exports = {
   excluirPorID,
   checaSeProdutoExiste,
   atualizarProduto,
+  procurarProdutosEmPedidos
 };
