@@ -30,18 +30,14 @@ const { detalharProdutos } = require("../produtosQuerys/queryFuncoes");
 
 //query para quantidade no estoque.
 
-const qntEstoque = async (pedido_produtos) => {
-  const arrayId = [];
-  for (let id in pedido_produtos) {
-    arrayId.push(pedido_produtos[id].produto_id);
-  }
-
+const qntEstoque = async (produto_id) => {
   const estoque = await knex("produtos")
     .select("quantidade_estoque")
-    .whereIn("id", arrayId);
+    .where("id", produto_id);
 
   return estoque;
 };
+
 module.exports = {
   qntEstoque,
 };

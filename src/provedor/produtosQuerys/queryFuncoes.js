@@ -27,7 +27,7 @@ const cadastrarProdutos = async (
 const checaSeProdutoExiste = async (id) => {
   const produto = await knex("produtos").where({ id });
 
-  return !produto[0];
+  return !!produto[0];
 };
 
 const atualizarProduto = async (
