@@ -1,5 +1,4 @@
 const path = require("path");
-const { parse } = require("pg-connection-string");
 require("dotenv").config({ path: path.resolve(__dirname, "../../../.env") });
 
 const pegarEnviroment = () => {
@@ -11,7 +10,7 @@ const pegarEnviroment = () => {
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
       user: process.env.DB_USER,
-      password: process.env.DB_PASS,
+      password: String(process.env.DB_PASS),
     },
     migrations: {
       directory: path.resolve(__dirname, "..", "migrations"),
@@ -25,9 +24,12 @@ const pegarEnviroment = () => {
   if (process.env.NODE_ENV === "test") {
     test = {
       ...dev,
-      connection: {
-        ...parse(process.env.VERCEL_DB_TEST),
-        ssl: { rejectUnauthorized: false },
+      client: "sqlite3",
+      connection: ":memory:",
+      pool: {
+        afterCreate: (connection, done) => {
+          connection.run("PRAGMA foreign_keys = ON"), done();
+        },
       },
     };
   }

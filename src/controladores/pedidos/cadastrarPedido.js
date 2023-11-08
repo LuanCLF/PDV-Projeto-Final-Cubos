@@ -1,11 +1,11 @@
 const {
   obterCliente,
-} = require("../../../provedor/clientesQuerys/queryFuncoes");
-const { qntEstoque } = require("../../../provedor/pedidoQuerys/queryFuncoes");
+} = require("../../provedor/clientesQuerys/queryFuncoes");
+const { qntEstoque } = require("../../provedor/pedidoQuerys/queryFuncoes");
 const {
   checaSeProdutoExiste,
   obterProdutos,
-} = require("../../../provedor/produtosQuerys/queryFuncoes");
+} = require("../../provedor/produtosQuerys/queryFuncoes");
 
 const cadastrarPedido = async (req, res) => {
   //   const { cliente_id, observacao, pedido_produtos } = req.body;
