@@ -23,14 +23,14 @@ const cadastrarProduto = async (req, res) => {
   if (imagem) {
     const s3Objeto = {
       Bucket: process.env.BACKBLAZE_BUCKET,
-      Key: `pdv/${imagem.originalname}`,
+      Key: `pdv/${req.usuario.email}/${imagem.originalname}`,
       ContentType: imagem.mimetype,
       Body: imagem.buffer,
     };
 
     await s3.send(new PutObjectCommand(s3Objeto));
 
-    produto_imagem = gerarUrl(imagem);
+    produto_imagem = gerarUrl(req.usuario.email, imagem);
   }
 
   await cadastrarProdutos({
