@@ -23,20 +23,19 @@ const listarProdutos = require("../controladores/produtos/listarProdutos");
 
 const {
   cadastrarCliente,
-} = require("../controladores/clientes/cadastrarCliente/cadastrarCliente");
+} = require("../controladores/clientes/cadastrarCliente");
 const {
   detalharCliente,
-} = require("../controladores/clientes/detalharCliente/detalharCliente");
-const {
-  editarCliente,
-} = require("../controladores/clientes/editarCliente/editarCliente");
-const {
-  listarCliente,
-} = require("../controladores/clientes/listarCliente/listarCliente");
-const { excluirProduto } = require("../controladores/produtos/excluirPorID");
+} = require("../controladores/clientes/detalharCliente");
+const { editarCliente } = require("../controladores/clientes/editarCliente");
+const { listarCliente } = require("../controladores/clientes/listarClientes");
+const { excluirProduto } = require("../controladores/produtos/excluirProduto");
 const {
   cadastrarPedido,
 } = require("../controladores/pedidos/cadastrarPedido/cadastrarPedido");
+const {
+  listarPedidos,
+} = require("../controladores/pedidos/listarPedidos/listarPedidos");
 
 rotas.post(
   "/usuario",
@@ -82,4 +81,6 @@ rotas.post(
 rotas.get("/produto", listarProdutos);
 
 rotas.post("/pedido", cadastrarPedido);
+rotas.get("/pedido", listarPedidos);
+
 module.exports = rotas;
