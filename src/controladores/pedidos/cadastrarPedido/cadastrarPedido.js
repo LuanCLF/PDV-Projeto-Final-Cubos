@@ -1,5 +1,6 @@
 const {
   obterCliente,
+  detalharClientes,
 } = require("../../../provedor/clientesQuerys/queryFuncoes");
 const {
   qntEstoque,
@@ -9,6 +10,7 @@ const {
 const {
   checaSeProdutoExiste,
 } = require("../../../provedor/produtosQuerys/queryFuncoes");
+const envioDeEmail = require("./emailSendler");
 
 const cadastrarPedido = async (req, res) => {
   const { cliente_id, observacao, pedido_produtos } = req.body;
@@ -84,8 +86,19 @@ const cadastrarPedido = async (req, res) => {
 
       // Enviar e-mail para o cliente notificando que o pedido foi efetuado com sucesso.
 
-      await registrarPedido(cliente_id, observacao, pedido_produtos, somaTotal);
+      //await registrarPedido(cliente_id, observacao, pedido_produtos, somaTotal);
     }
+
+    //===========//
+    // ===ANTES DE SUBIR PRA PROD ::::: remover a variavel email e destruturar o email no detalhar cliente ==//
+
+    const { nome } = await detalharClientes(cliente_id);
+    const email = "seu email aqui";
+    console.log(nome, email);
+    await envioDeEmail(nome, email);
+
+    //========//
+
     return res.status(201).json();
   } catch (error) {
     console.log(error.message);
