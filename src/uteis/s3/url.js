@@ -1,7 +1,7 @@
-const gerarUrl = (email, imagem) => {
+const gerarUrl = (email, id, imagem) => {
   return `https://${process.env.BACKBLAZE_BUCKET}.${
     process.env.ENDPOINT_S3
-  }/pdv/${encodeURIComponent(email)}/${encodeURIComponent(
+  }/pdv/${encodeURIComponent(email)}/${id}/${encodeURIComponent(
     imagem.originalname
   )}`;
 };

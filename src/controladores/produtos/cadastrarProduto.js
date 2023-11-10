@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const {
   cadastrarProdutos,
   verificarCategoria,
+  atualizarProduto,
 } = require("../../provedor/produtosQuerys/queryFuncoes");
 const { ErroNaoEncontrado } = require("../../uteis/erros/erroDaApi");
 const { erroCategoriaNaoEncontrada } = require("../../uteis/erros/mensagens");
@@ -20,26 +21,29 @@ const cadastrarProduto = async (req, res) => {
   }
 
   let produto_imagem = "Não enviado";
-  if (imagem) {
-    const s3Objeto = {
-      Bucket: process.env.BACKBLAZE_BUCKET,
-      Key: `pdv/${req.usuario.email}/${imagem.originalname}`,
-      ContentType: imagem.mimetype,
-      Body: imagem.buffer,
-    };
 
-    await s3.send(new PutObjectCommand(s3Objeto));
-
-    produto_imagem = gerarUrl(req.usuario.email, imagem);
-  }
-
-  await cadastrarProdutos({
+  const { id } = await cadastrarProdutos({
     descricao,
     quantidade_estoque,
     valor,
     categoria_id,
     produto_imagem,
   });
+
+  if (imagem) {
+    const s3Objeto = {
+      Bucket: process.env.BACKBLAZE_BUCKET,
+      Key: `pdv/${req.usuario.email}/${id}/${imagem.originalname}`,
+      ContentType: imagem.mimetype,
+      Body: imagem.buffer,
+    };
+
+    await s3.send(new PutObjectCommand(s3Objeto));
+
+    produto_imagem = gerarUrl(req.usuario.email, id, imagem);
+
+    atualizarProduto(id, { produto_imagem });
+  }
 
   res.status(StatusCodes.CREATED).json();
 };
