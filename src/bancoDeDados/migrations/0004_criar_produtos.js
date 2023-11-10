@@ -7,6 +7,8 @@ exports.up = function (knex) {
 
           table.string("descricao").checkLength("<=", 255).notNullable();
 
+          table.string("produto_imagem").checkLength("<=", 255);
+
           table.integer("quantidade_estoque").notNullable();
 
           table.integer("valor").notNullable();

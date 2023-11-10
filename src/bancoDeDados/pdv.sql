@@ -44,7 +44,8 @@ id SERIAL PRIMARY KEY NOT NULL,
 descricao VARCHAR(255) NOT NULL,
 quantidade_estoque INT NOT NULL,
 valor INT NOT NULL,
-categoria_id SERIAL REFERENCES categorias(id)
+categoria_id SERIAL REFERENCES categorias(id),
+produto_imagem VARCHAR(255)
 )
 
  CREATE TABLE pedidos(

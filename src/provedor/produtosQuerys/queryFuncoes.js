@@ -8,9 +8,9 @@ const verificarCategoria = async (id) => {
 };
 
 const cadastrarProdutos = async (produto) => {
-  await knex("produtos").insert(produto);
+  const id = await knex("produtos").insert(produto).returning("id");
 
-  return;
+  return id[0];
 };
 
 const checaSeProdutoExiste = async (id) => {
@@ -20,6 +20,7 @@ const checaSeProdutoExiste = async (id) => {
 };
 
 const atualizarProduto = async (id, produto) => {
+
   await knex("produtos").where({ id }).update(produto);
 
   return;
@@ -57,11 +58,19 @@ const   excluirPorID = async (id) => {
   return !produto;
 };
 
+<<<<<<< HEAD
 const procurarProdutosEmPedidos = async (produto_id) =>{
   const produtoPedido = await knex("pedido_produtos").where({produto_id});
 
   return produtoPedido;
 }
+=======
+const procurarProdutosEmPedidos = async (produto_id) => {
+  const produtoPedido = await knex("pedido_produtos").where({ produto_id });
+
+  return produtoPedido;
+};
+>>>>>>> 0ee8a83f38c311048bb6e468cf6d293f1676cf5b
 
 module.exports = {
   verificarCategoria,
@@ -72,5 +81,9 @@ module.exports = {
   excluirPorID,
   checaSeProdutoExiste,
   atualizarProduto,
+<<<<<<< HEAD
   procurarProdutosEmPedidos
+=======
+  procurarProdutosEmPedidos,
+>>>>>>> 0ee8a83f38c311048bb6e468cf6d293f1676cf5b
 };
