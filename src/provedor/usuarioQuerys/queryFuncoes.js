@@ -3,18 +3,23 @@ const knex = require("../../bancoDeDados/conexao");
 const emailExistente = async (email) => {
   const emailUsuario = await knex("usuarios")
     .select("id")
-    .where("email", email);
+    .where({ email })
+    .first();
 
-  return emailUsuario;
+  return !!emailUsuario;
 };
 
 const obterUsuarioEmail = async (email) => {
-  const perfilEncontradoEmail = await knex("usuarios").where("email", email);
+  const perfilEncontradoEmail = await knex("usuarios").where({ email }).first();
+
   return perfilEncontradoEmail;
 };
 
 const obterUsuarioId = async (id) => {
-  const perfilEncontradoId = await knex("usuarios").where({ id }).first();
+  const perfilEncontradoId = await knex("usuarios")
+    .where({ id })
+    .select(["id", "nome", "email"])
+    .first();
 
   return perfilEncontradoId;
 };

@@ -3,11 +3,11 @@ const {
   emailCliente,
   cpfCliente,
   obterCliente,
-} = require("../../../provedor/clientesQuerys/queryFuncoes");
+} = require("../../provedor/clientesQuerys/queryFuncoes");
 const {
-  ConflictRequestError,
-  NotFoundError,
-} = require("../../../helpers/erros/api-errors-helpers");
+  ErroDeConflito,
+  ErroNaoEncontrado,
+} = require("../../uteis/erros/erroDaApi");
 const { StatusCodes } = require("http-status-codes");
 
 const editarCliente = async (req, res) => {
@@ -17,17 +17,17 @@ const editarCliente = async (req, res) => {
   const naoExisteCliente = await obterCliente(id);
 
   if (naoExisteCliente) {
-    throw NotFoundError("Cliente não existe");
+    throw ErroNaoEncontrado("Cliente não existe");
   }
 
   const existeEmail = await emailCliente(email);
   const existeCpf = await cpfCliente(cpf);
 
   if (existeEmail) {
-    throw ConflictRequestError("email ja existe");
+    throw ErroDeConflito("email ja existe");
   }
   if (existeCpf) {
-    throw ConflictRequestError("cpf ja existe");
+    throw ErroDeConflito("cpf ja existe");
   }
 
   let { logradouro, ddd, bairro, localidade, uf } = await (

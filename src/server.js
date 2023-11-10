@@ -3,13 +3,13 @@ require("dotenv").config();
 
 const express = require("express");
 const rotas = require("./rotas/rotas");
-const { errorHandler } = require("./intermediarios");
+const { intermediarioDeErros } = require("./intermediarios");
 
 const app = express();
 
 app.use(express.json());
 
 app.use(rotas);
-app.use(errorHandler);
+app.use(intermediarioDeErros);
 
 module.exports = app;

@@ -1,16 +1,25 @@
 const supertest = require("supertest");
 const app = require("../src/server");
-process.env.NODE_ENV = "test";
+const knex = require("../src/bancoDeDados/conexao");
 
 const testServer = supertest(app);
-process.env.NODE_ENV = "test";
 
-const tokenTest = async () => {
+const before = async () => {
+  await knex.migrate.latest();
+  await knex.seed.run();
+};
+
+const after = async () => {
+  await knex.destroy();
+};
+
+const tokenTest = async (emailEnviado) => {
   const resposta = await testServer.post("/login").send({
-    email: "testeTesteA@gmail.com",
+    email: emailEnviado || "testeTesteLogin@teste.com",
     senha: "senha",
   });
+
   return resposta.body.token;
 };
 
-module.exports = { testServer, tokenTest };
+module.exports = { testServer, tokenTest, before, after };
