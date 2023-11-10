@@ -47,8 +47,6 @@ const registrarPedido = async (
   return;
 };
 
-//query para quantidade no estoque.
-
 const qntEstoque = async (produto_id) => {
   const estoque = await knex("produtos")
     .select("quantidade_estoque")
@@ -117,9 +115,23 @@ const buscarPedidos = async (cliente_id) => {
   return pedidosAgrupados;
 };
 
+async function estoqueDisponivel(pedido_produtos) {
+  let estoqueBoolean = true;
+
+  for (let pedido of pedido_produtos) {
+    const estoque = await qntEstoque(pedido.produto_id);
+
+    if (pedido.quantidade_produto > estoque[0].quantidade_estoque) {
+      return (estoqueBoolean = false);
+    }
+  }
+  return estoqueBoolean;
+}
+
 module.exports = {
   qntEstoque,
   buscarPedidos,
   somaValor,
   registrarPedido,
+  estoqueDisponivel,
 };
