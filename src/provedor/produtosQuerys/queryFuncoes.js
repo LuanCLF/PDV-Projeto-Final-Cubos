@@ -1,48 +1,26 @@
 const knex = require("../../bancoDeDados/conexao");
+const { obterClientes } = require("../clientesQuerys/queryFuncoes");
 
-const verificarCategoria = async (categoria_id) => {
-  const categoriaExistente = await knex("categorias")
-    .where("id", categoria_id)
-    .select("id");
+const verificarCategoria = async (id) => {
+  const categoriaExistente = await knex("categorias").where({ id }).first();
 
-  return !categoriaExistente[0];
+  return !!categoriaExistente;
 };
 
-const cadastrarProdutos = async (
-  descricao,
-  quantidade_estoque,
-  valor,
-  categoria_id
-) => {
-  await knex("produtos").insert({
-    descricao,
-    quantidade_estoque,
-    valor,
-    categoria_id,
-  });
+const cadastrarProdutos = async (produto) => {
+  const id = await knex("produtos").insert(produto).returning("id");
 
-  return;
+  return id[0];
 };
 
 const checaSeProdutoExiste = async (id) => {
-  const produto = await knex("produtos").where({ id });
+  const produto = await knex("produtos").where({ id }).first();
 
-  return !produto[0];
+  return !!produto;
 };
 
-const atualizarProduto = async (
-  id,
-  descricao,
-  quantidade_estoque,
-  valor,
-  categoria_id
-) => {
-  const produtoatualizado = await knex("produtos").where({ id }).update({
-    descricao,
-    quantidade_estoque,
-    valor,
-    categoria_id,
-  });
+const atualizarProduto = async (id, produto) => {
+  await knex("produtos").where({ id }).update(produto);
 
   return;
 };
@@ -52,8 +30,18 @@ const listarCategoriasProd = async () => {
   return categorias;
 };
 
-const obterProdutos = async () => {
-  const produtos = await knex("produtos");
+const obterProdutos = async (pagina, filtro) => {
+  const produtos = knex("produtos")
+    .modify((query) => {
+      if (filtro && filtro.length) {
+        filtro.forEach((item) => {
+          query.orWhereLike("descricao", `%${item}%`);
+        });
+      }
+    })
+    .offset(pagina)
+    .limit(10);
+
   return produtos;
 };
 
@@ -69,6 +57,12 @@ const excluirPorID = async (id) => {
   return !produto;
 };
 
+const procurarProdutosEmPedidos = async (produto_id) => {
+  const produtoPedido = await knex("pedido_produtos").where({ produto_id });
+
+  return produtoPedido;
+};
+
 module.exports = {
   verificarCategoria,
   cadastrarProdutos,
@@ -78,4 +72,5 @@ module.exports = {
   excluirPorID,
   checaSeProdutoExiste,
   atualizarProduto,
+  procurarProdutosEmPedidos,
 };

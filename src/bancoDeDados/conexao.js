@@ -1,5 +1,5 @@
-const knex = require("knex");
+const config = require("knex");
 
 const configuracaoKnex = require("./knex/enviromentBanco");
-
-module.exports = knex(configuracaoKnex);
+const knex = config(configuracaoKnex);
+module.exports = knex;

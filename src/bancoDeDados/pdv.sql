@@ -30,7 +30,11 @@ id SERIAL PRIMARY KEY NOT NULL,
 nome VARCHAR(100) NOT NULL,
 email VARCHAR(50) NOT NULL,
 cpf CHAR(11) NOT NULL UNIQUE,
+<<<<<<< HEAD
 cep CHAR(8),
+=======
+cep VARCHAR(8),
+>>>>>>> dev
 rua VARCHAR(100),
 numero VARCHAR(10),
 bairro VARCHAR(100),
@@ -44,7 +48,8 @@ id SERIAL PRIMARY KEY NOT NULL,
 descricao VARCHAR(255) NOT NULL,
 quantidade_estoque INT NOT NULL,
 valor INT NOT NULL,
-categoria_id SERIAL REFERENCES categorias(id)
+categoria_id SERIAL REFERENCES categorias(id),
+produto_imagem VARCHAR(255)
 )
 
  CREATE TABLE pedidos(
@@ -63,5 +68,4 @@ CREATE TABLE pedido_produtos (
 );
 
 alter table produtos add column produto_imagem text;
-
 

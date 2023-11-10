@@ -1,20 +1,19 @@
 const { StatusCodes } = require("http-status-codes");
-const {
-  ConflictRequestError,
-} = require("../../helpers/erros/api-errors-helpers");
+const { ErroDeConflito } = require("../../uteis/erros/erroDaApi");
 const {
   emailExistente,
   usuarioCadastrado,
 } = require("../../provedor/usuarioQuerys/queryFuncoes");
-const criptografarSenha = require("../../helpers/senhas/criptografiaSenha");
+const criptografarSenha = require("../../uteis/senhas/criptografiaSenha");
+const { erroEmailExistente } = require("../../uteis/erros/mensagens");
 
 const cadastrarUsuario = async (req, res) => {
   const { nome, email, senha } = req.body;
 
-  const EmailCadastrado = await emailExistente(email);
+  const emailExiste = await emailExistente(email);
 
-  if (EmailCadastrado.length > 0) {
-    throw ConflictRequestError("O Email já está cadastrado!");
+  if (emailExiste) {
+    throw ErroDeConflito(erroEmailExistente);
   }
 
   const senhaCriptografada = await criptografarSenha(senha);

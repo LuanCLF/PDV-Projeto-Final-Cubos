@@ -8,33 +8,18 @@ jobs:
   integracao-continua:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: pdv
-        ports:
-          - 5432:5432
-
     steps:
       - uses: actions/checkout@v3
       - name: usando Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
       - name: Configurar variáveis de ambiente
         run: |
           echo "PORT=3000" >> $GITHUB_ENV
           echo "SENHA_JWT=ababababaababa" >> $GITHUB_ENV
-          echo "NODE_ENV=dev" >> $GITHUB_ENV
-          echo "DB_HOST=localhost" >> $GITHUB_ENV
-          echo "DB_PORT=5432" >> $GITHUB_ENV
-          echo "DB_USER=postgres" >> $GITHUB_ENV
-          echo "DB_PASS=password" >> $GITHUB_ENV
-          echo "DB_NAME=pdv" >> $GITHUB_ENV
+          echo "NODE_ENV=test" >> $GITHUB_ENV
       - name: run install, migrate, seed e test
         run: |
           npm install
-          npm run workflow-test
+          npm run test
