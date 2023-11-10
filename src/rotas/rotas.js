@@ -1,6 +1,8 @@
 const express = require("express");
 const rotas = express();
 
+const multer = require("../uteis/multer/multer");
+
 const autenticacao = require("../intermediarios/autenticacao/autenticacao");
 const validarRequisicao = require("../intermediarios/validacaoCampo/validarRequisicao");
 
@@ -63,18 +65,10 @@ rotas.put(
   editarCliente
 );
 
-rotas.put(
-  "/produto/:id",
-  validarRequisicao(produtoSchema.editar),
-  editarProduto
-);
+rotas.put("/produto/:id", multer.single("produto_imagem"), editarProduto);
 rotas.get("/produto/:id", detalharProduto);
 rotas.delete("/produto/:id", excluirProduto);
-rotas.post(
-  "/produto",
-  validarRequisicao(produtoSchema.cadastro),
-  cadastrarProduto
-);
+rotas.post("/produto", multer.single("produto_imagem"), cadastrarProduto);
 rotas.get("/produto", listarProdutos);
 
 rotas.post("/pedido", cadastrarPedido);
