@@ -15,7 +15,7 @@ const excluirProduto = async (req, res) => {
   const { id } = req.params;
 
   const produtoNaoPodeExcluir = await procurarProdutosEmPedidos(id);
-
+  console.log(id, produtoNaoPodeExcluir);
   if (produtoNaoPodeExcluir) {
     throw ErroDeConflito(
       "O Produto está vinculado á algum pedido, não pode ser excluido."

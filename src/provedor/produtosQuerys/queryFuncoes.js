@@ -20,7 +20,6 @@ const checaSeProdutoExiste = async (id) => {
 };
 
 const atualizarProduto = async (id, produto) => {
-
   await knex("produtos").where({ id }).update(produto);
 
   return;
@@ -61,7 +60,7 @@ const excluirPorID = async (id) => {
 const procurarProdutosEmPedidos = async (produto_id) => {
   const produtoPedido = await knex("pedido_produtos").where({ produto_id });
 
-  return produtoPedido;
+  return produtoPedido.length > 0;
 };
 
 module.exports = {
