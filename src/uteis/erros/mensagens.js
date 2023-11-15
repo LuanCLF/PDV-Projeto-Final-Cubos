@@ -1,5 +1,6 @@
 const mensagemDeErro = {
   erroEmailExistente: "O email já está cadastrado!",
+  erroEmailOuCpfExistente: "O email ou cpf já está cadastrado!",
   erroEmailOuSenhaInvalidos: "Email ou senha inválidos!",
   erroNaoAutorizado: "Usuário não autorizado!",
   erroUsuarioNaoEncontrado: "Usuário não encontrado.",

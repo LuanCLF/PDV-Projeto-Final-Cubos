@@ -3,8 +3,6 @@ import { after, before, testServer } from "../vitest.setup";
 import { erroEmailExistente } from "../../src/uteis/erros/mensagens";
 
 describe("testes para rota de criação do usuário", () => {
-  const email = "testeTesteCadastro1@teste.com";
-
   beforeAll(async () => {
     await before();
   });
@@ -36,7 +34,7 @@ describe("testes para rota de criação do usuário", () => {
   it("tenta criar e consegue", async () => {
     const resposta = await testServer.post("/usuario").send({
       nome: "testeTesteCadastro",
-      email,
+      email: "testeTesteCadastro1@teste.com",
       senha: "senha",
     });
 

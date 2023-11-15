@@ -9,18 +9,15 @@ const clienteCadastrado = async (nome, email, cpf) => {
 
   return;
 };
-const emailCliente = async (email) => {
-  const emailUnico = await knex("clientes")
-    .select("email")
-    .where("email", email);
 
-  return !!emailUnico[0];
-};
+const checaSeClienteExiste = async (email, cpf) => {
+  const usuario = await knex("clientes")
+    .select("id")
+    .orWhere({ email })
+    .orWhere({ cpf })
+    .first();
 
-const cpfCliente = async (cpf) => {
-  const cpfUnico = await knex("clientes").select("cpf").where("cpf", cpf);
-
-  return !!cpfUnico[0];
+  return !!usuario;
 };
 
 const atualizarCliente = async (id, dados) => {
@@ -30,14 +27,14 @@ const atualizarCliente = async (id, dados) => {
 const obterCliente = async (id) => {
   const cliente = await knex("clientes").where("id", id).select("id");
 
-    return !cliente[0]
-}
+  return !cliente[0];
+};
 
 const obterClientes = async (pagina, filtro) => {
-    const clientes = await knex("clientes")
-        .offset(pagina)
-        .limit(10)
-        .orWhereILike("nome", `%${filtro || ""}%`)
+  const clientes = await knex("clientes")
+    .offset(pagina)
+    .limit(10)
+    .orWhereILike("nome", `%${filtro || ""}%`);
 
   return clientes;
 };
@@ -53,7 +50,6 @@ module.exports = {
   obterCliente,
   obterClientes,
   atualizarCliente,
-  emailCliente,
-  cpfCliente,
   detalharClientes,
+  checaSeClienteExiste,
 };
