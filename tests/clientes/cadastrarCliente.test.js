@@ -1,10 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { after, before, testServer, tokenTest } from "../vitest.setup";
-import {
-  erroCpfExistente,
-  erroEmailExistente,
-  erroEmailOuCpfExistente,
-} from "../../src/uteis/erros/mensagens";
+import { erroEmailOuCpfExistente } from "../../src/uteis/erros/mensagens";
 
 describe("testes para rota de criação do cliente", () => {
   let token;
@@ -12,7 +8,7 @@ describe("testes para rota de criação do cliente", () => {
   beforeAll(async () => {
     await before();
     token = {
-      authorization: `Bearer ${await tokenTest("testeTesteLogin@teste.com")}`,
+      authorization: `Bearer ${await tokenTest()}`,
     };
   });
 

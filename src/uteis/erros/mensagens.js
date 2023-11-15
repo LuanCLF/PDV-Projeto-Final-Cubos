@@ -4,6 +4,7 @@ const mensagemDeErro = {
   erroEmailOuSenhaInvalidos: "Email ou senha inválidos!",
   erroNaoAutorizado: "Usuário não autorizado!",
   erroUsuarioNaoEncontrado: "Usuário não encontrado.",
+  erroClienteNaoEncontrado: "Cliente não encontrado.",
   erroCategoriaNaoEncontrada: "Categoria não encontrada.",
   erroProdutoNaoEncontrado: "Produto não encontrado.",
 };
