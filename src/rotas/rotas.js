@@ -30,7 +30,7 @@ const {
   detalharCliente,
 } = require("../controladores/clientes/detalharCliente");
 const { editarCliente } = require("../controladores/clientes/editarCliente");
-const { listarCliente } = require("../controladores/clientes/listarClientes");
+const { listarClientes } = require("../controladores/clientes/listarClientes");
 const { excluirProduto } = require("../controladores/produtos/excluirProduto");
 
 const { cadastrarPedido } = require("../controladores/pedidos/cadastrarPedido");
@@ -57,7 +57,7 @@ rotas.post(
   validarRequisicao(clienteSchema.cadastro),
   cadastrarCliente
 );
-rotas.get("/cliente", listarCliente);
+rotas.get("/cliente", listarClientes);
 rotas.get("/cliente/:id", detalharCliente);
 rotas.put(
   "/cliente/:id",
