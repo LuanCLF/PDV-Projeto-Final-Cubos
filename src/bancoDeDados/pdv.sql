@@ -63,5 +63,5 @@ CREATE TABLE pedido_produtos (
   valor_produto INT NOT NULL
 );
 
-alter table produtos add column produto_imagem text;
+
 
