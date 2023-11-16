@@ -1,5 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
-const { buscarPedidos } = require("../../provedor/pedidoQuerys/queryFuncoes");
+const {
+  buscarPedidos,
+} = require("../../../provedor/pedidoQuerys/queryFuncoes");
 
 const listarPedidos = async (req, res) => {
   const cliente_id = req.query.client_id;
