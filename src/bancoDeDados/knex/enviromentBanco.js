@@ -3,13 +3,14 @@ require("dotenv").config({ path: path.resolve(__dirname, "../../../.env") });
 
 const pegarEnviroment = () => {
   const dev = {
+    client: "pg",
     useNullAsDefault: true,
-    client: "sqlite3",
-    connection: path.resolve(__dirname + "../../../../bancoSqlLite.db"),
-    pool: {
-      afterCreate: (connection, done) => {
-        connection.run("PRAGMA foreign_keys = ON"), done();
-      },
+    connection: {
+      database: process.env.DB_NAME,
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: String(process.env.DB_PASS),
     },
     migrations: {
       directory: path.resolve(__dirname, "..", "migrations"),
