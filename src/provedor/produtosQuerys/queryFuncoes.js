@@ -8,7 +8,7 @@ const listarCategoriasProd = async () => {
 const verificarCategoria = async (id) => {
   const categoriaExistente = await knex("categorias").where({ id }).first();
 
-  return !!categoriaExistente;
+  return !categoriaExistente;
 };
 
 const cadastrarProdutos = async (produto) => {
@@ -20,7 +20,7 @@ const cadastrarProdutos = async (produto) => {
 const checaSeProdutoExiste = async (id) => {
   const produto = await knex("produtos").where({ id }).first();
 
-  return !!produto;
+  return !produto;
 };
 
 const atualizarProduto = async (id, produto) => {

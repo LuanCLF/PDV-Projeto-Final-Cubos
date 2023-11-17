@@ -18,33 +18,23 @@ const somaValor = async (pedido_produtos) => {
   return valorTotal;
 };
 
-const registrarPedido = async (
-  cliente_id,
-  observacao,
-  pedido_produtos,
-  somaTotal
-) => {
-  const pedidoRegistrado = await knex("pedidos")
-    .insert({
-      cliente_id,
-      observacao,
-      valor_total: somaTotal,
-    })
-    .returning("id");
+const registrarPedido = async (pedido, pedido_produtos, produtos) => {
+  const pedidoRegistrado = await knex("pedidos").insert(pedido).returning("id");
 
-  const insercaoPedido_produtos = pedido_produtos.forEach(
-    async ({ produto_id, quantidade_produto }) => {
-      const produto = await detalharProdutos(produto_id);
+  const produtosParaInserir = pedido_produtos.map(
+    ({ produto_id, quantidade_produto }) => {
+      const produto = produtos.find((p) => p.id === produto_id);
 
-      const registro = await knex("pedido_produtos").insert({
+      return {
         pedido_id: pedidoRegistrado[0].id,
         produto_id: produto.id,
         quantidade_produto: quantidade_produto,
         valor_produto: produto.valor,
-      });
+      };
     }
   );
-  return;
+
+  await knex("pedido_produtos").insert(produtosParaInserir);
 };
 
 const qntEstoque = async (produto_id) => {

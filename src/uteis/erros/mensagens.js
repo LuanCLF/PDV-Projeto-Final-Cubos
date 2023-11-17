@@ -7,6 +7,10 @@ const mensagemDeErro = {
   erroClienteNaoEncontrado: "Cliente não encontrado.",
   erroCategoriaNaoEncontrada: "Categoria não encontrada.",
   erroProdutoNaoEncontrado: "Produto não encontrado.",
+  erroProdutosNaoEncontrados: (produtos) =>
+    `Os seguintes produtos não foram encontrados: [${produtos}]`,
+  erroEstoqueIndisponivel: (ids) =>
+    `Os seguintes produtos estão com estoque indisponivel: [${ids}]`,
 };
 
 module.exports = { ...mensagemDeErro };

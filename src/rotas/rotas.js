@@ -15,6 +15,7 @@ const detalharPerfilUsuario = require("../controladores/usuarios/logado/detalhar
 const usuarioSchema = require("../schema/usuarioSchema");
 const clienteSchema = require("../schema/clienteSchema");
 const produtoSchema = require("../schema/produtoSchema");
+const pedidoSchema = require("../schema/pedidoSchema");
 
 const {
   cadastrarProduto,
@@ -79,7 +80,11 @@ rotas.post(
 );
 rotas.get("/produto", listarProdutos);
 
-rotas.post("/pedido", cadastrarPedido);
+rotas.post(
+  "/pedido",
+  validarRequisicao(pedidoSchema.cadastro),
+  cadastrarPedido
+);
 rotas.get("/pedido", listarPedidos);
 
 module.exports = rotas;

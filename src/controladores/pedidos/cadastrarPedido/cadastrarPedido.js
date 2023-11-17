@@ -1,84 +1,83 @@
+const { StatusCodes } = require("http-status-codes");
+const knex = require("../../../bancoDeDados/conexao");
 const {
   obterCliente,
-  detalharClientes,
 } = require("../../../provedor/clientesQuerys/queryFuncoes");
 const {
-  qntEstoque,
-  somaValor,
   registrarPedido,
-  estoqueDisponivel,
 } = require("../../../provedor/pedidoQuerys/queryFuncoes");
+
 const {
-  checaSeProdutoExiste,
-} = require("../../../provedor/produtosQuerys/queryFuncoes");
+  ErroDeConflito,
+  ErroDeRequisicao,
+  ErroNaoEncontrado,
+} = require("../../../uteis/erros/erroDaApi");
+const {
+  erroClienteNaoEncontrado,
+  erroEstoqueIndisponivel,
+  erroProdutosNaoEncontrados,
+} = require("../../../uteis/erros/mensagens");
 const envioDeEmail = require("../../smtpEmail/envioDeEmail.js/emailSendler");
 
 const cadastrarPedido = async (req, res) => {
   const { cliente_id, observacao, pedido_produtos } = req.body;
 
-  try {
-    const cliente = await obterCliente(cliente_id);
-
-    if (!cliente) {
-      return res.status(404).json({ Mensagem: "Cliente não encontrado" });
-    }
-
-    if (!pedido_produtos || !pedido_produtos[0]) {
-      return res.status(400).json({ Mensagem: "Insira algum produto" });
-    }
-
-    let produto = {
-      produtoBoolean: true,
-      produtoId: [],
-    };
-    async function produtoExistente(pedido_produtos) {
-      for (i = 0; i < pedido_produtos.length; i++) {
-        if (pedido_produtos[i]) {
-          const { produto_id } = pedido_produtos[i];
-
-          if (!Number(produto_id)) {
-            return (produto.produtoBoolean = false);
-          }
-          produto.produtoBoolean = await checaSeProdutoExiste(produto_id);
-
-          if (!produto.produtoBoolean) {
-            produto.produtoId.push(produto_id);
-          }
-        }
-      }
-
-      if (produto.produtoBoolean === false) {
-        return;
-      }
-
-      return produto;
-    }
-
-    if (produto.produtoBoolean === false) {
-      return res.status(404).json({
-        Mensagem: `Produtos : [${produto.produtoId}] Não encontrado`,
-      });
-    }
-
-    const estoque = await estoqueDisponivel(pedido_produtos);
-
-    if (estoque === false) {
-      return res.status(400).json({ Mensagem: "Produto sem estoque" });
-    }
-
-    const somaTotal = await somaValor(pedido_produtos);
-
-    await registrarPedido(cliente_id, observacao, pedido_produtos, somaTotal);
-
-    const { nome, email } = await detalharClientes(cliente_id);
-
-    await envioDeEmail(nome, email);
-
-    return res.status(201).json();
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).json({ error: "Erro interno do servidor" });
+  const cliente = await obterCliente(cliente_id);
+ 
+  if (cliente) {
+    throw ErroDeConflito(erroClienteNaoEncontrado);
   }
+
+  let naoEncontradoIds = [];
+
+  const ids = pedido_produtos.map((item) => item.produto_id);
+  const produtos = await knex("produtos").whereIn("id", ids);
+
+  if (produtos.length !== ids.length) {
+    const produtosIds = produtos.map((produto) => produto.id);
+    const produtosNaoEncontrados = ids.filter(
+      (id) => !produtosIds.includes(id)
+    );
+
+    naoEncontradoIds = produtosNaoEncontrados;
+  }
+
+  if (naoEncontradoIds.length > 0) {
+    throw ErroNaoEncontrado(erroProdutosNaoEncontrados(naoEncontradoIds));
+  }
+
+  const semEstoque = [];
+  let valor_total = 0;
+  pedido_produtos.forEach((entrada) => {
+    const { quantidade_produto: quantidadeEntrada, produto_id } = entrada;
+    produtos.forEach((banco) => {
+      const { id, quantidade_estoque, valor } = banco;
+      const iguais = id === produto_id;
+
+      if (iguais && quantidade_estoque < quantidadeEntrada) {
+        semEstoque.push(id);
+      } else if (iguais) {
+        valor_total += valor * quantidadeEntrada;
+      }
+    });
+  });
+
+  if (semEstoque.length > 0) {
+    throw ErroDeRequisicao(erroEstoqueIndisponivel(semEstoque));
+  }
+
+  const pedido = {
+    cliente_id,
+    observacao,
+    valor_total,
+  };
+  await registrarPedido(pedido, pedido_produtos, produtos);
+
+  const { nome, email } = req.usuario;
+  
+  await envioDeEmail(nome, email);
+
+  return res.status(StatusCodes.CREATED).json();
 };
 module.exports = {
   cadastrarPedido,

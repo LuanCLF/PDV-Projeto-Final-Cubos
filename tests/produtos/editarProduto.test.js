@@ -28,6 +28,7 @@ describe("testes para a rota de edição do produto", async () => {
       .set({ authorization: token })
       .send(produto);
 
+    console.log(resposta.body, "primeiro");
     expect(resposta.body).toStrictEqual({ mensagem: erroProdutoNaoEncontrado });
     expect(resposta.statusCode).toEqual(404);
   });
