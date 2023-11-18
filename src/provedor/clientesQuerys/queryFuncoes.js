@@ -21,13 +21,13 @@ const checaSeClienteExiste = async (email, cpf) => {
 };
 
 const atualizarCliente = async (id, dados) => {
-  await knex("clientes").where("id", id).update(dados);
+  await knex("clientes").where({ id }).update(dados);
 };
 
 const obterCliente = async (id) => {
-  const cliente = await knex("clientes").where("id", id).select("id");
-
-  return !cliente[0];
+  const cliente = await knex("clientes").where({ id }).select("id").first();
+  
+  return !cliente;
 };
 
 const obterClientes = async (pagina, filtro) => {

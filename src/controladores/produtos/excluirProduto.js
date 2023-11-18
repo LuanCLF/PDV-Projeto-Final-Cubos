@@ -4,7 +4,10 @@ const {
   ErroNaoEncontrado,
   ErroDeConflito,
 } = require("../../uteis/erros/erroDaApi");
-const { erroProdutoNaoEncontrado } = require("../../uteis/erros/mensagens");
+const {
+  erroProdutoNaoEncontrado,
+  erroProdutoVinculado,
+} = require("../../uteis/erros/mensagens");
 const {
   excluirPorID,
   procurarProdutosEmPedidos,
@@ -16,11 +19,9 @@ const excluirProduto = async (req, res) => {
   const { id } = req.params;
 
   const produtoNaoPodeExcluir = await procurarProdutosEmPedidos(id);
-  console.log(id, produtoNaoPodeExcluir);
+ 
   if (produtoNaoPodeExcluir) {
-    throw ErroDeConflito(
-      "O Produto está vinculado á algum pedido, não pode ser excluido."
-    );
+    throw ErroDeConflito(erroProdutoVinculado);
   }
 
   const produtoNaoExiste = await excluirPorID(id);

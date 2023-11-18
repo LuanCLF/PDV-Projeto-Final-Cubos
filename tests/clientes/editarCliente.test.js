@@ -26,7 +26,7 @@ describe("testes para rota de edição do cliente", () => {
 
   it("tenta editar e falha porque não enviou nada", async () => {
     const resposta = await testServer.put("/cliente/4").set(token).send();
-    console.log(resposta.body);
+
     expect(resposta.body).toHaveProperty("mensagem");
     expect(resposta.statusCode).toEqual(400);
   });
@@ -36,7 +36,6 @@ describe("testes para rota de edição do cliente", () => {
       .put("/cliente/9999999999999999999")
       .set(token)
       .send(clienteObjeto);
-    console.log(resposta.body);
 
     expect(resposta.body).toStrictEqual({ mensagem: erroClienteNaoEncontrado });
     expect(resposta.statusCode).toEqual(404);
