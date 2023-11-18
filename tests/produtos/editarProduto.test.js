@@ -28,13 +28,14 @@ describe("testes para a rota de edição do produto", async () => {
       .set({ authorization: token })
       .send(produto);
 
+    console.log(resposta.body, "primeiro");
     expect(resposta.body).toStrictEqual({ mensagem: erroProdutoNaoEncontrado });
     expect(resposta.statusCode).toEqual(404);
   });
 
   it("tenta editar um produto mas a categoria não existe", async () => {
     const resposta = await testServer
-      .put("/produto/1")
+      .put("/produto/2")
       .set({ authorization: token })
       .send({ ...produto, categoria_id: 999999999999999 });
 

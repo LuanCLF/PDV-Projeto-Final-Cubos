@@ -28,6 +28,7 @@ const editarProduto = async (req, res) => {
   if (categoriaNaoExiste) {
     throw ErroNaoEncontrado(erroCategoriaNaoEncontrada);
   }
+  
   let produto_imagem = "";
   if (imagem) {
     const s3Objeto = {

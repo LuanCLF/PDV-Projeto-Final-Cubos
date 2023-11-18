@@ -1,14 +1,18 @@
 const {
   atualizarCliente,
-  emailCliente,
-  cpfCliente,
+
   obterCliente,
+  checaSeClienteExiste,
 } = require("../../provedor/clientesQuerys/queryFuncoes");
 const {
   ErroDeConflito,
   ErroNaoEncontrado,
 } = require("../../uteis/erros/erroDaApi");
 const { StatusCodes } = require("http-status-codes");
+const {
+  erroClienteNaoEncontrado,
+  erroEmailOuCpfExistente,
+} = require("../../uteis/erros/mensagens");
 
 const editarCliente = async (req, res) => {
   const { nome, email, cpf, cep } = req.body;
@@ -17,23 +21,19 @@ const editarCliente = async (req, res) => {
   const naoExisteCliente = await obterCliente(id);
 
   if (naoExisteCliente) {
-    throw ErroNaoEncontrado("Cliente não existe");
+    throw ErroNaoEncontrado(erroClienteNaoEncontrado);
   }
+  const clienteExisteComEmailOuCpf = await checaSeClienteExiste(email, cpf);
 
-  const existeEmail = await emailCliente(email);
-  const existeCpf = await cpfCliente(cpf);
-
-  if (existeEmail) {
-    throw ErroDeConflito("email ja existe");
-  }
-  if (existeCpf) {
-    throw ErroDeConflito("cpf ja existe");
+  if (clienteExisteComEmailOuCpf) {
+    throw ErroDeConflito(erroEmailOuCpfExistente);
   }
 
   let { logradouro, ddd, bairro, localidade, uf } = await (
     await fetch(`https://viacep.com.br/ws/${cep}/json/`)
   ).json();
-  enderecoAtualizado = {
+
+  const enderecoAtualizado = {
     cep,
     rua: logradouro,
     numero: ddd,
@@ -43,7 +43,7 @@ const editarCliente = async (req, res) => {
   };
 
   await atualizarCliente(id, { nome, email, cpf, ...enderecoAtualizado });
-
+  
   res.status(StatusCodes.NO_CONTENT).json();
 };
 

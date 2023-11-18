@@ -13,7 +13,6 @@ const { gerarUrl } = require("../../uteis/s3/url");
 const cadastrarProduto = async (req, res) => {
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
   const imagem = req.file;
-
   const categoriaNaoExiste = await verificarCategoria(categoria_id);
 
   if (categoriaNaoExiste) {
@@ -42,7 +41,7 @@ const cadastrarProduto = async (req, res) => {
 
     produto_imagem = gerarUrl(req.usuario.email, id, imagem);
 
-    atualizarProduto(id, { produto_imagem });
+    await atualizarProduto(id, { produto_imagem });
   }
 
   res.status(StatusCodes.CREATED).json();
