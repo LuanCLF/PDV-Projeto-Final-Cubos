@@ -15,6 +15,7 @@ const detalharPerfilUsuario = require("../controladores/usuarios/logado/detalhar
 const usuarioSchema = require("../schema/usuarioSchema");
 const clienteSchema = require("../schema/clienteSchema");
 const produtoSchema = require("../schema/produtoSchema");
+const pedidoSchema = require("../schema/pedidoSchema");
 
 const {
   cadastrarProduto,
@@ -30,7 +31,7 @@ const {
   detalharCliente,
 } = require("../controladores/clientes/detalharCliente");
 const { editarCliente } = require("../controladores/clientes/editarCliente");
-const { listarCliente } = require("../controladores/clientes/listarClientes");
+const { listarClientes } = require("../controladores/clientes/listarClientes");
 const { excluirProduto } = require("../controladores/produtos/excluirProduto");
 const {
   cadastrarPedido,
@@ -60,7 +61,7 @@ rotas.post(
   validarRequisicao(clienteSchema.cadastro),
   cadastrarCliente
 );
-rotas.get("/cliente", listarCliente);
+rotas.get("/cliente", listarClientes);
 rotas.get("/cliente/:id", detalharCliente);
 rotas.put(
   "/cliente/:id",
@@ -71,10 +72,19 @@ rotas.put(
 rotas.put("/produto/:id", multer.single("produto_imagem"), editarProduto);
 rotas.get("/produto/:id", detalharProduto);
 rotas.delete("/produto/:id", excluirProduto);
-rotas.post("/produto", multer.single("produto_imagem"), cadastrarProduto);
+rotas.post(
+  "/produto",
+  multer.single("produto_imagem"),
+  validarRequisicao(produtoSchema.cadastro),
+  cadastrarProduto
+);
 rotas.get("/produto", listarProdutos);
 
-rotas.post("/pedido", cadastrarPedido);
+rotas.post(
+  "/pedido",
+  validarRequisicao(pedidoSchema.cadastro),
+  cadastrarPedido
+);
 rotas.get("/pedido", listarPedidos);
 
 module.exports = rotas;

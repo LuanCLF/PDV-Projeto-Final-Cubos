@@ -1,26 +1,23 @@
 const {
   clienteCadastrado,
-  emailCliente,
-  cpfCliente,
+  checaSeClienteExiste,
 } = require("../../provedor/clientesQuerys/queryFuncoes");
 const { StatusCodes } = require("http-status-codes");
 
 const { ErroDeConflito } = require("../../uteis/erros/erroDaApi");
+const { erroEmailOuCpfExistente } = require("../../uteis/erros/mensagens");
 
 const cadastrarCliente = async (req, res) => {
   const { nome, email, cpf } = req.body;
 
-  const existeEmail = await emailCliente(email);
-  const existeCpf = await cpfCliente(cpf);
+  const clienteExiste = await checaSeClienteExiste(email, cpf);
 
-  if (existeEmail) {
-    throw ErroDeConflito("email ja existe");
-  }
-  if (existeCpf) {
-    throw ErroDeConflito("cpf ja existe");
+  if (clienteExiste) {
+    throw ErroDeConflito(erroEmailOuCpfExistente);
   }
 
   await clienteCadastrado(nome, email, cpf);
+
   res.status(StatusCodes.CREATED).json();
 };
 

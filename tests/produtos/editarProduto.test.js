@@ -34,7 +34,7 @@ describe("testes para a rota de edição do produto", async () => {
 
   it("tenta editar um produto mas a categoria não existe", async () => {
     const resposta = await testServer
-      .put("/produto/1")
+      .put("/produto/2")
       .set({ authorization: token })
       .send({ ...produto, categoria_id: 999999999999999 });
 

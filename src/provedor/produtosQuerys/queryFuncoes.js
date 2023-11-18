@@ -1,10 +1,14 @@
 const knex = require("../../bancoDeDados/conexao");
-const { obterClientes } = require("../clientesQuerys/queryFuncoes");
+
+const listarCategoriasProd = async () => {
+  const categorias = await knex("categorias");
+  return categorias;
+};
 
 const verificarCategoria = async (id) => {
   const categoriaExistente = await knex("categorias").where({ id }).first();
 
-  return !!categoriaExistente;
+  return !categoriaExistente;
 };
 
 const cadastrarProdutos = async (produto) => {
@@ -16,18 +20,13 @@ const cadastrarProdutos = async (produto) => {
 const checaSeProdutoExiste = async (id) => {
   const produto = await knex("produtos").where({ id }).first();
 
-  return !!produto;
+  return !produto;
 };
 
 const atualizarProduto = async (id, produto) => {
   await knex("produtos").where({ id }).update(produto);
 
   return;
-};
-
-const listarCategoriasProd = async () => {
-  const categorias = await knex("categorias");
-  return categorias;
 };
 
 const obterProdutos = async (pagina, filtro) => {
@@ -60,7 +59,7 @@ const excluirPorID = async (id) => {
 const procurarProdutosEmPedidos = async (produto_id) => {
   const produtoPedido = await knex("pedido_produtos").where({ produto_id });
 
-  return produtoPedido;
+  return produtoPedido.length > 0;
 };
 
 module.exports = {

@@ -9,35 +9,38 @@ const clienteCadastrado = async (nome, email, cpf) => {
 
   return;
 };
-const emailCliente = async (email) => {
-  const emailUnico = await knex("clientes")
-    .select("email")
-    .where("email", email);
 
-  return !!emailUnico[0];
-};
+const checaSeClienteExiste = async (email, cpf) => {
+  const usuario = await knex("clientes")
+    .select("id")
+    .orWhere({ email })
+    .orWhere({ cpf })
+    .first();
 
-const cpfCliente = async (cpf) => {
-  const cpfUnico = await knex("clientes").select("cpf").where("cpf", cpf);
-
-  return !!cpfUnico[0];
+  return !!usuario;
 };
 
 const atualizarCliente = async (id, dados) => {
-  await knex("clientes").where("id", id).update(dados);
+  await knex("clientes").where({ id }).update(dados);
 };
 
 const obterCliente = async (id) => {
-  const cliente = await knex("clientes").where("id", id).select("id");
-
-  return !!cliente[0];
+  const cliente = await knex("clientes").where({ id }).select("id").first();
+  
+  return !cliente;
 };
 
 const obterClientes = async (pagina, filtro) => {
   const clientes = await knex("clientes")
+    .modify((query) => {
+      if (filtro && filtro.length) {
+        filtro.forEach((item) => {
+          query.orWhereLike("nome", `%${item}%`);
+        });
+      }
+    })
     .offset(pagina)
-    .limit(10)
-    .orWhereILike("nome", `%${filtro || ""}%`);
+    .limit(10);
 
   return clientes;
 };
@@ -53,7 +56,6 @@ module.exports = {
   obterCliente,
   obterClientes,
   atualizarCliente,
-  emailCliente,
-  cpfCliente,
   detalharClientes,
+  checaSeClienteExiste,
 };

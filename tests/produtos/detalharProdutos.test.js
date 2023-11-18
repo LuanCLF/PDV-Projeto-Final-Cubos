@@ -30,6 +30,7 @@ describe("testes para a rota de detalhar o produto", async () => {
     expect(resposta.body).toHaveProperty("produto");
     expect(resposta.body).toHaveProperty("produto.id");
     expect(resposta.body).toHaveProperty("produto.descricao");
+    expect(resposta.body).toHaveProperty("produto.produto_imagem");
     expect(resposta.body).toHaveProperty("produto.quantidade_estoque");
     expect(resposta.body).toHaveProperty("produto.valor");
     expect(resposta.body).toHaveProperty("produto.categoria_id");
