@@ -7,6 +7,8 @@ const mensagemDeErro = {
   erroClienteNaoEncontrado: "Cliente não encontrado.",
   erroCategoriaNaoEncontrada: "Categoria não encontrada.",
   erroProdutoNaoEncontrado: "Produto não encontrado.",
+  erroProdutoVinculado:
+    "O Produto está vinculado á algum pedido, não pode ser excluido.",
   erroProdutosNaoEncontrados: (produtos) =>
     `Os seguintes produtos não foram encontrados: [${produtos}]`,
   erroEstoqueIndisponivel: (ids) =>
