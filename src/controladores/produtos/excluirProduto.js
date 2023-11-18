@@ -1,13 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-// <<<<<<< HEAD:src/controladores/produtos/excluirPorID.js
-// const { excluirPorID, procurarProdutosEmPedidos } = require("../../provedor/produtosQuerys/queryFuncoes");
-// const { NotFoundError, ConflictRequestError } = require("../../helpers/erros/api-errors-helpers");
-// =======
-// const { excluirPorID } = require("../../provedor/produtosQuerys/queryFuncoes");
-// const { ErroNaoEncontrado } = require("../../uteis/erros/erroDaApi");
-// const { erroProdutoNaoEncontrado } = require("../../uteis/erros/mensagens");
-// >>>>>>> 7166e028a023e4df3d475df0e78f
-// e4b537f626c2:src/controladores/produtos/excluirProduto.js
+
 const {
   ErroNaoEncontrado,
   ErroDeConflito,
@@ -38,11 +30,11 @@ const excluirProduto = async (req, res) => {
   }
 
   const s3Objeto = {
-    Bucket: process.env.BACKBLAZE_BUCKET,
+    Bucket: process.env.BACKBLAZE_BUCKET || "",
     Key: `pdv/${req.usuario.email}/${id}/`,
   };
 
-  await s3.send(new DeleteObjectCommand(s3Objeto));
+  s3.send(new DeleteObjectCommand(s3Objeto)).catch((erro) => console.log(erro));
 
   res.status(StatusCodes.NO_CONTENT).json();
 };

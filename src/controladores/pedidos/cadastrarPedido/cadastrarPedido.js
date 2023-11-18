@@ -23,7 +23,7 @@ const cadastrarPedido = async (req, res) => {
   const { cliente_id, observacao, pedido_produtos } = req.body;
 
   const cliente = await obterCliente(cliente_id);
- 
+
   if (cliente) {
     throw ErroDeConflito(erroClienteNaoEncontrado);
   }
@@ -74,8 +74,8 @@ const cadastrarPedido = async (req, res) => {
   await registrarPedido(pedido, pedido_produtos, produtos);
 
   const { nome, email } = req.usuario;
-  
-  await envioDeEmail(nome, email);
+
+  envioDeEmail(nome, email).catch((erro) => console.log(erro));
 
   return res.status(StatusCodes.CREATED).json();
 };
