@@ -1,5 +1,7 @@
 # Esse projeto foi feito em equipe por:
 
+[Luan Charlys](https://github.com/LuanCLF)
+
 [Emerson Reis](https://github.com/emersonReisBa)
 
 [Lucas Cezar](https://github.com/LucasKennari)
