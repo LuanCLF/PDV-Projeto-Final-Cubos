@@ -1,0 +1,25 @@
+name: integracao continua
+
+on:
+  pull_request:
+    branches: ["prod", "dev"]
+
+jobs:
+  integracao-continua:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: usando Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Configurar variáveis de ambiente
+        run: |
+          echo "PORT=3000" >> $GITHUB_ENV
+          echo "SENHA_JWT=ababababaababa" >> $GITHUB_ENV
+          echo "NODE_ENV=test" >> $GITHUB_ENV
+      - name: run install, migrate, seed e test
+        run: |
+          npm install
+          npm run test
