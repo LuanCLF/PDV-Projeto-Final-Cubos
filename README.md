@@ -1,3 +1,18 @@
+# Esse projeto foi feito em equipe por:
+
+[Emerson Reis](https://github.com/emersonReisBa)
+
+[Lucas Cezar](https://github.com/LucasKennari)
+
+[Lucca Schramm](https://github.com/lucca-schramm)
+
+[Vinícius Tenchini](https://github.com/tenchini)
+
+[Wesley George](https://github.com/wwesleyg)
+
+
+
+
 # desafio-backend-05-pdv
 ![](https://i.imgur.com/xG74tOh.png)
 
